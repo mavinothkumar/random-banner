@@ -3,7 +3,7 @@
  * Plugin Name: Random Banner
  * Plugin URI: https://buffercode.com/plugin/random-banner-pro
  * Description: Random Banner WordPress plugin provides users with high level of flexibility to show image banner and script ads randomly on Widgets
- * Version: 4.1.5
+ * Version: 4.1.6
  * Author: vinoth06
  * Author URI: https://buffercode.com/
  * License: GPLv2
@@ -15,7 +15,7 @@
 /**
  * Version Number
  */
-define( 'BC_RB_PLUGIN_VERSION', '4.1.5' );
+define( 'BC_RB_PLUGIN_VERSION', '4.1.6' );
 /**
  * Random Banner DB Name
  */

@@ -3,8 +3,8 @@ Contributors: vinoth06, buffercode
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7DHAEMST475BY
 Tags: banner, widget, advertisement, ads, banner ads, widget ads, image ads, ads upload, upload advertisement, upload widget ads, random banner, easy banner, free banner ads, random script ads, script banner upload, upload script ads, banner campaign, easy campaign banner, campaign, ads campaign
 Requires at least: 4.2
-Tested up to: 5.8.3
-Stable tag: 4.1.5
+Tested up to: 5.9
+Stable tag: 4.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
