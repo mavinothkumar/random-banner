@@ -2,7 +2,7 @@
 /**
  * All Request Handler
  *
- * @package request
+ * @package Random Banner
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -24,9 +24,6 @@ add_action( 'wp_ajax_nopriv_bc_rb_save_popup', 'bc_rb_save_banner_no_priv' );
 add_action( 'wp_ajax_bc_rb_save_category', 'bc_rb_save_category' );
 add_action( 'wp_ajax_nopriv_bc_rb_save_category', 'bc_rb_save_banner_no_priv' );
 
-//add_action( 'wp_ajax_bc_rb_validate', 'bc_rb_validate' );
-//add_action( 'wp_ajax_nopriv_bc_rb_validate', 'bc_rb_save_banner_no_priv' );
-
 add_action( 'wp_ajax_bc_rb_delete_category', 'bc_rb_delete_category' );
 add_action( 'wp_ajax_nopriv_bc_rb_delete_category', 'bc_rb_save_banner_no_priv' );
 
@@ -44,10 +41,12 @@ add_action( 'wp_ajax_nopriv_bc_delete_dbs', 'bc_rb_save_banner_no_priv' );
  * Delete Banner by it ID
  */
 function bc_rb_delete_banner() {
-	bc_rb_check_nonce( $_REQUEST['nonce'], "bc_rb_nonce_delete" );
-	// Delete Upload or Script Banner by ID
-	bc_rb_delete_upload_script( $_POST );
-
+	$post_payload = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+	if ( isset( $_REQUEST['nonce'] ) && ! empty( $_REQUEST['nonce'] ) ) {
+		bc_rb_check_nonce( $_REQUEST['nonce'], 'bc_rb_nonce_delete' );
+		// Delete Upload or Script Banner by ID.
+		bc_rb_delete_upload_script( $post_payload );
+	}
 }
 
 
@@ -55,19 +54,23 @@ function bc_rb_delete_banner() {
  * Save Banner
  */
 function bc_rb_save_banner() {
-	bc_rb_check_nonce( $_REQUEST['nonce'], "bc_rb_nonce" );
-	// Create or update the uploaded or script banner type
-	bc_rb_create_update_upload_script( $_POST );
+	if ( isset( $_REQUEST['nonce'] ) && ! empty( $_REQUEST['nonce'] ) ) {
+		bc_rb_check_nonce( $_REQUEST['nonce'], 'bc_rb_nonce' );
+		// Create or update the uploaded or script banner type.
+		bc_rb_create_update_upload_script( $_POST );
+	}
 }
 
 /**
  * Skip Donation Banner Popup by 2 days
  */
 function bc_rb_donation_later() {
-	bc_rb_check_nonce( $_REQUEST['nonce'], "bc_rb_donation_later" );
+	if ( isset( $_REQUEST['nonce'] ) && ! empty( $_REQUEST['nonce'] ) ) {
+		bc_rb_check_nonce( $_REQUEST['nonce'], 'bc_rb_donation_later' );
 
-	// Update DB to remind Later
-	bc_rb_remind_later();
+		// Update DB to remind Later.
+		bc_rb_remind_later();
+	}
 
 }
 
@@ -75,43 +78,29 @@ function bc_rb_donation_later() {
  * Restricting for No Privilege Users
  */
 function bc_rb_save_banner_no_priv() {
-	echo "You must log in to vote";
+	echo 'You must log in to vote';
 	die();
 }
-
-/**
- * Get offers from buffercode
- * Disabled until next version.
- * @return mixed
- */
-//function bc_rb_get_offers() {
-//	$url      = 'https://ifecho.com/api/random_banner/get_offer';
-//	$response = wp_remote_get( $url, array( 'timeout' => 120, 'httpversion' => '1.1' ) );
-//	if ( is_array( $response ) ) {
-//		if ( $response['response']['code'] == 200 ) {
-//			return ( $response['body'] ); // use the content.
-//		}
-//
-//		return '';
-//	}
-//
-//}
 
 /**
  * Save Options
  */
 function bc_rb_save_options() {
-	bc_rb_check_nonce( $_REQUEST['nonce'], "bc_rb_save_options" );
-	bc_rb_save_setting_options( $_POST );
+	if ( isset( $_REQUEST['nonce'] ) && ! empty( $_REQUEST['nonce'] ) ) {
+		bc_rb_check_nonce( $_REQUEST['nonce'], 'bc_rb_save_options' );
+		bc_rb_save_setting_options( $_POST );
+	}
 }
 
 /**
  * Save Popup
  */
 function bc_rb_save_popup() {
-	bc_rb_check_nonce( $_REQUEST['nonce'], "bc_rb_save_popup" );
-	$post_payload = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
-	bc_rb_save_popup_options( $post_payload );
+	if ( isset( $_REQUEST['nonce'] ) && ! empty( $_REQUEST['nonce'] ) ) {
+		bc_rb_check_nonce( $_REQUEST['nonce'], 'bc_rb_save_popup' );
+		$post_payload = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+		bc_rb_save_popup_options( $post_payload );
+	}
 }
 
 /**
@@ -119,7 +108,7 @@ function bc_rb_save_popup() {
  */
 function bc_rb_save_category() {
 	$post_payload = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
-	bc_rb_check_nonce( $_REQUEST['nonce'], "bc_rb_save_category" );
+	bc_rb_check_nonce( $_REQUEST['nonce'], 'bc_rb_save_category' );
 	// Create or update the category name
 	bc_rb_create_update_category( $post_payload );
 }
@@ -129,26 +118,18 @@ function bc_rb_save_category() {
  */
 function bc_rb_delete_category() {
 	$post_payload = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
-	bc_rb_check_nonce( $_REQUEST['nonce'], "bc_rb_delete_category" );
+	bc_rb_check_nonce( $_REQUEST['nonce'], 'bc_rb_delete_category' );
 	bc_rb_delete_category_id( $post_payload );
 }
-
-/**
- * Validate PayPal ID
- * Disabled until Next version.
- */
-//function bc_rb_validate() {
-//	bc_rb_check_nonce( $_REQUEST['nonce'], "bc_rb_validate" );
-//
-//	bc_rb_validate_account( $_REQUEST );
-//}
 
 /**
  * Insert Shortcode inside the post Save
  */
 function bc_rb_save_insert_post() {
-	bc_rb_check_nonce( $_REQUEST['nonce'], "bc_rb_save_insert_post" );
-	bc_rb_save_insert_post_model( $_REQUEST );
+	if ( isset( $_REQUEST['nonce'] ) && ! empty( $_REQUEST['nonce'] ) ) {
+		bc_rb_check_nonce( $_REQUEST['nonce'], 'bc_rb_save_insert_post' );
+		bc_rb_save_insert_post_model( $_REQUEST );
+	}
 }
 
 /**
@@ -156,15 +137,26 @@ function bc_rb_save_insert_post() {
  */
 
 function bc_delete_dbs() {
-	bc_rb_check_nonce( $_REQUEST['bc_delete_dbs'], "bc_delete_dbs" );
-	uninstall_bc_random_banner_table();
+	if ( isset( $_REQUEST['nonce'] ) && ! empty( $_REQUEST['nonce'] ) ) {
+		bc_rb_check_nonce( $_REQUEST['bc_delete_dbs'], 'bc_delete_dbs' );
+		uninstall_bc_random_banner_table();
 
-	echo wp_json_encode( array(
-		'status'  => 'ok',
-		'message' => __( 'You have deleted all your Random Banner tables and its options, Please uninstall the plugin now', 'random-banner' ),
-		'type'    => 'success',
-	) );
+		echo wp_json_encode(
+			array(
+				'status'  => 'ok',
+				'message' => __( 'You have deleted all your Random Banner tables and its options, Please uninstall the plugin now', 'random-banner' ),
+				'type'    => 'success',
+			)
+		);
+		exit();
+	}
+	echo wp_json_encode(
+		array(
+			'status'  => 'no',
+			'message' => __( 'Something went wrong', 'random-banner' ),
+			'type'    => 'error',
+		)
+	);
 	exit();
-
 }
 

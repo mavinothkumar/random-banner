@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param array $post Banner details.
  *
- * @return string [success / failure]
+ * @return string
  */
 function bc_rb_create( $post ) {
 	global $wpdb;
@@ -70,7 +70,7 @@ function bc_rb_update( $post ) {
 /**
  * Get all banners
  *
- * @return array|null|object|void
+ * @return mixed.
  */
 function bc_rb_get_all_row() {
 	global $wpdb;
@@ -117,7 +117,7 @@ function bc_rb_delete_by_id( $id ) {
  * Remind me later for PayPal Popup
  */
 function bc_rb_remind_later() {
-	$one_week = date( 'Ymd', strtotime( '+2 days' ) );
+	$one_week = gmdate( 'Ymd', strtotime( '+2 days' ) );
 	update_option( 'bc_rb_payment_info', $one_week );
 	echo 'yes';
 }

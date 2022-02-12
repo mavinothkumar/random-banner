@@ -17,7 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function bc_rb_check_nonce( $nonce, $nonce_name ) {
 	if ( ! wp_verify_nonce( $nonce, $nonce_name ) ) {
-		$error = array( 'error' => 'No naughty business please', 'type' => 'error' );
+		$error = array(
+			'error' => 'No naughty business please',
+			'type'  => 'error',
+		);
 		echo json_encode( $error );
 		exit();
 	}

@@ -22,7 +22,7 @@ function bc_rb_db_update( $old_version ) {
  * Update from version 2.0 to 2.2
  */
 function bc_rb_version_2_0_to_2_2() {
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	global $wpdb;
 	$bc_random_banner = $wpdb->prefix . BC_RB_RANDOM_BANNER_DB;
 	if ( ! $wpdb->get_col_length( $bc_random_banner, 'automatic' ) ) {
@@ -34,19 +34,21 @@ function bc_rb_version_2_0_to_2_2() {
  * Update from version above 2.2 to 3.3.
  */
 function bc_rb_version_2_2_greater() {
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	global $wpdb;
 	$post                      = array( 'category' => 'default' );
 	$bc_random_banner_category = $wpdb->prefix . BC_RB_RANDOM_BANNER_CATEGORY;
 	$bc_random_banner          = $wpdb->prefix . BC_RB_RANDOM_BANNER_DB;
 
 	// Add new Category Table.
-	$wpdb->query( "CREATE TABLE IF NOT EXISTS $bc_random_banner_category (
+	$wpdb->query(
+		"CREATE TABLE IF NOT EXISTS $bc_random_banner_category (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 		category varchar (255) NOT NULL,
 		created VARCHAR (255)  DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		PRIMARY KEY id (id)
-	)" );
+	)"
+	);
 
 	// Add Category column to random banner table if not exist.
 	if ( ! $wpdb->get_col_length( $bc_random_banner, 'category' ) ) {
@@ -60,7 +62,7 @@ function bc_rb_version_2_2_greater() {
  * Update from above 3.3.
  */
 function bc_rb_version_3_3() {
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	global $wpdb;
 	$bc_random_banner = $wpdb->prefix . BC_RB_RANDOM_BANNER_DB;
 
@@ -105,7 +107,7 @@ function bc_rb_random_banner_table_create( $bc_random_banner, $charset_collate )
 		created VARCHAR (255)  DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		PRIMARY KEY id (id)
 	) $charset_collate;";
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql_create_table_bc_random_banner );
 	}
 }
@@ -119,8 +121,8 @@ function bc_rb_random_banner_table_create( $bc_random_banner, $charset_collate )
  */
 function bc_rb_random_banner_option_table( $bc_random_banner_options, $bc_random_banner, $charset_collate ) {
 	global $wpdb;
-	if ( $wpdb->get_var( "SHOW TABLES LIKE '$bc_random_banner_options'" ) != $bc_random_banner_options ) {
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	if ( $wpdb->get_var( "SHOW TABLES LIKE '$bc_random_banner_options'" ) !== $bc_random_banner_options ) {
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		$sql_create_table_bc_random_banner_options = "CREATE TABLE $bc_random_banner_options (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
   country VARCHAR (255) NULL,
@@ -136,6 +138,4 @@ function bc_rb_random_banner_option_table( $bc_random_banner_options, $bc_random
 ) $charset_collate; ";
 		dbDelta( $sql_create_table_bc_random_banner_options );
 	}
-
-
 }

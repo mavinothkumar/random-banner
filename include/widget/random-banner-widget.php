@@ -38,11 +38,11 @@ class random_banner_widget extends WP_Widget {
 			}
 			$category = ( ! empty( $instance['category'] ) ) ? $instance['category'] : 'default';
 			$autoplay = ( ! empty( $instance['autoplay'] ) ) ? $instance['autoplay'] : 'false';
-			$autoplay == 'True' ? 'Autoplay' : 'false';
-			$delay  = ! empty( $instance['delay'] ) ? $instance['delay'] : '';
-			$loop   = ! empty( $instance['loop'] ) ? $instance['loop'] : 'false';
-			$slider = ! empty( $instance['slider'] ) ? $instance['slider'] : 'No';
-			$dots   = ! empty( $instance['dots'] ) ? $instance['dots'] : 'true';
+			$autoplay = 'True' === $autoplay ? 'Autoplay' : 'false';
+			$delay    = ! empty( $instance['delay'] ) ? $instance['delay'] : '';
+			$loop     = ! empty( $instance['loop'] ) ? $instance['loop'] : 'false';
+			$slider   = ! empty( $instance['slider'] ) ? $instance['slider'] : 'No';
+			$dots     = ! empty( $instance['dots'] ) ? $instance['dots'] : 'true';
 
 			$slider_list = array(
 				'slider'   => $slider,
@@ -71,19 +71,19 @@ class random_banner_widget extends WP_Widget {
 		$dots     = ! empty( $instance['dots'] ) ? $instance['dots'] : '';
 		?>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'random-banner' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
 				   name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
 				   value="<?php echo esc_attr( $title ); ?>">
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'category' ) ); ?>"><?php _e( 'Select Category:' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'category' ) ); ?>"><?php esc_html_e( 'Select Category:', 'random-banner' ); ?></label>
 			<select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'category' ) ); ?>"
 					name="<?php echo esc_attr( $this->get_field_name( 'category' ) ); ?>"><?php echo bc_rb_get_category_by_array_js( $category ); ?></select>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'slider' ) ); ?>"><?php _e( 'Enable Slider?' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'slider' ) ); ?>"><?php esc_html_e( 'Enable Slider?', 'random-banner' ); ?></label>
 			<select class="widefat bc_rb_enable_slider" id="<?php echo esc_attr( $this->get_field_id( 'slider' ) ); ?>"
 					name="<?php echo esc_attr( $this->get_field_name( 'slider' ) ); ?>"><?php echo bc_rb_get_enable_slider( $slider ); ?></select>
 		</p>
@@ -91,28 +91,28 @@ class random_banner_widget extends WP_Widget {
 
 		<div class="autoplay_options">
 			<p>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'autoplay' ) ); ?>"><?php _e( 'Autoplay:' ); ?></label>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'autoplay' ) ); ?>"><?php esc_html_e( 'Autoplay:', 'random-banner' ); ?></label>
 				<select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'autoplay' ) ); ?>"
 						name="<?php echo esc_attr( $this->get_field_name( 'autoplay' ) ); ?>"><?php echo bc_rb_get_slider_autoplay( $autoplay ); ?></select>
 			</p>
 
 			<p>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'delay' ) ); ?>"><?php _e( 'Delay:(ms)' ); ?></label>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'delay' ) ); ?>"><?php esc_html_e( 'Delay:(ms)', 'random-banner' ); ?></label>
 				<select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'delay' ) ); ?>"
 						name="<?php echo esc_attr( $this->get_field_name( 'delay' ) ); ?>"><?php echo bc_rb_get_slider_delay( $delay ); ?></select>
 			</p>
 
 			<p>
-				<label for="<?php echo esc_attr( $this->get_field_id( 'loop' ) ); ?>"><?php _e( 'Loop:' ); ?></label>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'loop' ) ); ?>"><?php esc_html_e( 'Loop:', 'random-banner' ); ?></label>
 				<select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'loop' ) ); ?>"
 						name="<?php echo esc_attr( $this->get_field_name( 'loop' ) ); ?>"><?php echo bc_rb_get_slider_loop( $loop ); ?></select>
 			</p>
 
 			<p>
 				<label
-					for="<?php echo esc_attr($this->get_field_id( 'dots' )); ?>"><?php _e( 'Show Dots Under the Slider:' ); ?></label>
-				<select class="widefat" id="<?php echo esc_attr($this->get_field_id( 'dots' )); ?>"
-						name="<?php echo esc_attr($this->get_field_name( 'dots' )); ?>"><?php echo bc_rb_get_slider_loop( $dots ); ?></select>
+					for="<?php echo esc_attr( $this->get_field_id( 'dots' ) ); ?>"><?php esc_html_e( 'Show Dots Under the Slider:', 'random-banner' ); ?></label>
+				<select class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'dots' ) ); ?>"
+						name="<?php echo esc_attr( $this->get_field_name( 'dots' ) ); ?>"><?php echo bc_rb_get_slider_loop( $dots ); ?></select>
 			</p>
 		</div>
 		<?php

@@ -21,15 +21,15 @@ function bc_rb_upload_banner_model( $post ) {
 	$post = bc_rb_sanitize_text_field( $post );
 
 	return array(
-		'file_url'         => sanitize_url($post['file_url_link']),
-		'file_description' => bc_rb_sanitize_text_field($post['file_description']),
-		'external_link'    => sanitize_url($post['external_link']),
-		'banner_type'      => bc_rb_sanitize_text_field($post['banner_type']),
-		'automatic'        => bc_rb_sanitize_text_field($post['automatic']),
+		'file_url'         => esc_url_raw( $post['file_url_link'] ),
+		'file_description' => bc_rb_sanitize_text_field( $post['file_description'] ),
+		'external_link'    => esc_url_raw( $post['external_link'] ),
+		'banner_type'      => bc_rb_sanitize_text_field( $post['banner_type'] ),
+		'automatic'        => bc_rb_sanitize_text_field( $post['automatic'] ),
 		'width'            => (int) $post['width'],
 		'height'           => (int) $post['height'],
 		'user_id'          => $current_user->ID,
-		'category'         => bc_rb_sanitize_text_field($post['category']),
+		'category'         => bc_rb_sanitize_text_field( $post['category'] ),
 		'created'          => bc_rb_get_current_date(),
 	);
 }
@@ -65,12 +65,12 @@ function bc_rb_script_banner_model( $post ) {
 	global $current_user;
 
 	return array(
-		'file_description' => bc_rb_sanitize_text_field($post['file_description']),
+		'file_description' => bc_rb_sanitize_text_field( $post['file_description'] ),
 		'file_url'         => esc_textarea( $post['file_url_link'] ),
-		'banner_type'      => bc_rb_sanitize_text_field($post['banner_type']),
+		'banner_type'      => bc_rb_sanitize_text_field( $post['banner_type'] ),
 		'user_id'          => $current_user->ID,
 		'created'          => bc_rb_get_current_date(),
-		'category'         => bc_rb_sanitize_text_field($post['category']),
+		'category'         => bc_rb_sanitize_text_field( $post['category'] ),
 	);
 }
 

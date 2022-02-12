@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return bool|string
  */
 function bc_rb_get_current_date( $format = 'd-m-Y H:i:s' ) {
-	return date( $format );
+	return gmdate( $format );
 }
 
 /**
@@ -38,7 +38,7 @@ function bc_rb_convert_to_html( $string ) {
  */
 function bc_rb_show_payment_details() {
 	return '<div class="paypal_donation_button">
-				<img width="150px" src="' . esc_url(plugins_url( "/assets/images/paypal.png", BC_RB_PLUGIN )) . '" alt="Buffercode PayPal Donation Button"/>
+				<img width="150px" src="' . esc_url( plugins_url( '/assets/images/paypal.png', BC_RB_PLUGIN ) ) . '" alt="Buffercode PayPal Donation Button"/>
 				</div>';
 }
 
@@ -49,7 +49,7 @@ function bc_rb_show_payment_details() {
  */
 function bc_rb_is_paid() {
 	$paid_status = get_option( 'bc_rb_payment_info' );
-	if ( $paid_status == 'no' || strlen( $paid_status ) == 8 ) {
+	if ( ( 'no' === $paid_status ) || ( 8 === strlen( $paid_status ) ) ) {
 		return false;
 	}
 
@@ -91,7 +91,7 @@ function bc_rb_on_success_payment( $request ) {
 		update_option( 'bc_rb_payment_info', bc_rb_sanitize_text_field( $request['tid'] ) );
 		echo '<div class="alert alert-success">
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <strong>Success!</strong> Thanks for your Payment. Your Transaction ID : ' . bc_rb_sanitize_text_field( $request['tid'] ) . '
+  <strong>Success!</strong> Thanks for your Payment. Your Transaction ID : ' . esc_html( $request['tid'] ) . '
 </div>';
 	} elseif ( isset( $request['success'] ) ) {
 		echo '<div class="alert alert-danger">
@@ -114,14 +114,14 @@ function bc_rb_on_success_payment( $request ) {
  */
 function bc_rb_drop_down( $name, $options, $selected = null, $onchange = null, $class = null ) {
 	$options  = (array) $options;
-	$dropdown = '<select name="' . esc_attr($name) . '" class="form-control ' . esc_attr($class) . '"' . esc_attr($onchange) . '>' . "\n";
+	$dropdown = '<select name="' . esc_attr( $name ) . '" class="form-control ' . esc_attr( $class ) . '"' . esc_attr( $onchange ) . '>' . "\n";
 
 	foreach ( $options as $key => $option ) {
-		$select   = $selected == $key ? ' selected="true" selected' : "";
+		$select    = $selected === $key ? ' selected="true" selected' : '';
 		$dropdown .= sprintf(
 			"<option value=\"%s\"%s>%s</option>\r\n",
 			htmlspecialchars( $key ),
-			esc_attr($select),
+			esc_attr( $select ),
 			ucfirst( htmlspecialchars( $option ) )
 		);
 	}
@@ -145,16 +145,16 @@ function bc_rb_drop_down( $name, $options, $selected = null, $onchange = null, $
  */
 function bc_rb_drop_down_currency( $name, $options, $selected = null, $onchange = null, $class = null ) {
 	$options  = (array) $options;
-	$dropdown = '<select name="' . esc_attr($name) . '" class="form-control ' . esc_attr($class) . '"' . esc_attr($onchange) . '>' . "\n";
+	$dropdown = '<select name="' . esc_attr( $name ) . '" class="form-control ' . esc_attr( $class ) . '"' . esc_attr( $onchange ) . '>' . "\n";
 
 	foreach ( $options as $key => $option ) {
-		$select   = $selected == $key ? ' selected="true" selected' : "";
-		$option_  = $option['name'] . ' (' . $option['symbol'] . ')';
+		$select    = $selected === $key ? ' selected="true" selected' : '';
+		$option_   = $option['name'] . ' (' . $option['symbol'] . ')';
 		$dropdown .= sprintf(
 			"<option value=\"%s\"%s>%s</option>\r\n",
 			htmlspecialchars( $key ),
-			esc_attr($select),
-			esc_attr($option_)
+			esc_attr( $select ),
+			esc_attr( $option_ )
 		);
 	}
 
@@ -176,8 +176,8 @@ function bc_rb_drop_down_currency( $name, $options, $selected = null, $onchange 
  * @return string
  */
 function bc_rb_drop_down_category_filter( $name, $options, $selected = null, $onchange = null, $class = null ) {
-	$options  = (array) $options;
-	$dropdown = '<select name="' . esc_attr($name) . '" class="form-control ' . esc_attr($class) . '"' . esc_attr($onchange) . '>' . "\n";
+	$options   = (array) $options;
+	$dropdown  = '<select name="' . esc_attr( $name ) . '" class="form-control ' . esc_attr( $class ) . '"' . esc_attr( $onchange ) . '>' . "\n";
 	$dropdown .= sprintf(
 		"<option value=\"%s\"%s>%s</option>\r\n",
 		'bc__all',
@@ -186,11 +186,11 @@ function bc_rb_drop_down_category_filter( $name, $options, $selected = null, $on
 	);
 
 	foreach ( $options as $key => $option ) {
-		$select   = $selected == $key ? ' selected="true" selected' : "";
+		$select    = $selected === $key ? ' selected="true" selected' : '';
 		$dropdown .= sprintf(
 			"<option value=\"%s\"%s>%s</option>\r\n",
 			htmlspecialchars( sanitize_title( $key ) ),
-			esc_attr($select),
+			esc_attr( $select ),
 			ucfirst( htmlspecialchars( $option ) )
 		);
 	}
@@ -261,7 +261,10 @@ function bc_rb_get_slider_delay_values() {
  * @return array
  */
 function bc_rb_get_ads_type() {
-	return array( 'Cost Per Click' => 'Cost Per Click', 'Cost Per Impression' => 'Cost Per Impression' );
+	return array(
+		'Cost Per Click'      => 'Cost Per Click',
+		'Cost Per Impression' => 'Cost Per Impression',
+	);
 }
 
 /**
@@ -275,8 +278,8 @@ function bc_rb_get_ads_type() {
 function bc_rb_rename_to_unlimited( $value, $options ) {
 	$rename_option = bc_rb_get_options_value_campaign( $options );
 
-	if ( $value == - 1 ) {
-		return 'Unlimited ' . esc_attr($rename_option);
+	if ( - 1 === $value ) {
+		return 'Unlimited ' . esc_attr( $rename_option );
 	}
 
 	return floatval( $value );
@@ -345,10 +348,10 @@ function bc_rb_rename_to_unlimited_add_one( $value, $options ) {
  * @return string
  */
 function bc_rb_calculate_amount_used( $total, $cost ) {
-	if ( $total == - 1 ) {
+	if ( - 1 === $total ) {
 		return 'Not Applicable';
 	}
-	if ( $cost == - 1 ) {
+	if ( - 1 === $cost ) {
 		return - ( ( $total + 1 ) * $cost );
 	}
 
@@ -436,6 +439,11 @@ function bc_rb_number_1_to_10() {
 	);
 }
 
+/**
+ * Border Styles.
+ *
+ * @return array
+ */
 function bc_rb_border_styles() {
 	return array(
 		'dotted' => 'dotted',
@@ -457,51 +465,50 @@ function bc_rb_border_styles() {
  * @return array
  */
 function bc_rb_popup_animated_style() {
-	return
-		array(
-			'bounce'            => 'bounce',
-			'flash'             => 'flash',
-			'pulse'             => 'pulse',
-			'rubberBand'        => 'rubberBand',
-			'shake'             => 'shake',
-			'headShake'         => 'headShake',
-			'swing'             => 'swing',
-			'tada'              => 'tada',
-			'wobble'            => 'wobble',
-			'jello'             => 'jello',
-			'bounceIn'          => 'bounceIn',
-			'bounceInDown'      => 'bounceInDown',
-			'bounceInLeft'      => 'bounceInLeft',
-			'bounceInRight'     => 'bounceInRight',
-			'bounceInUp'        => 'bounceInUp',
-			'fadeIn'            => 'fadeIn',
-			'fadeInDown'        => 'fadeInDown',
-			'fadeInDownBig'     => 'fadeInDownBig',
-			'fadeInLeft'        => 'fadeInLeft',
-			'fadeInLeftBig'     => 'fadeInLeftBig',
-			'fadeInRight'       => 'fadeInRight',
-			'fadeInRightBig'    => 'fadeInRightBig',
-			'fadeInUp'          => 'fadeInUp',
-			'fadeInUpBig'       => 'fadeInUpBig',
-			'flipInX'           => 'flipInX',
-			'flipInY'           => 'flipInY',
-			'lightSpeedIn'      => 'lightSpeedIn',
-			'rotateIn'          => 'rotateIn',
-			'rotateInDownLeft'  => 'rotateInDownLeft',
-			'rotateInDownRight' => 'rotateInDownRight',
-			'rotateInUpLeft'    => 'rotateInUpLeft',
-			'rotateInUpRight'   => 'rotateInUpRight',
-			'hinge'             => 'hinge',
-			'rollIn'            => 'rollIn',
-			'zoomIn'            => 'zoomIn',
-			'zoomInDown'        => 'zoomInDown',
-			'zoomInRight'       => 'zoomInRight',
-			'zoomInUp'          => 'zoomInUp',
-			'slideInDown'       => 'slideInDown',
-			'slideInLeft'       => 'slideInLeft',
-			'slideInRight'      => 'slideInRight',
-			'slideInUp'         => 'slideInUp',
-		);
+	return array(
+		'bounce'            => 'bounce',
+		'flash'             => 'flash',
+		'pulse'             => 'pulse',
+		'rubberBand'        => 'rubberBand',
+		'shake'             => 'shake',
+		'headShake'         => 'headShake',
+		'swing'             => 'swing',
+		'tada'              => 'tada',
+		'wobble'            => 'wobble',
+		'jello'             => 'jello',
+		'bounceIn'          => 'bounceIn',
+		'bounceInDown'      => 'bounceInDown',
+		'bounceInLeft'      => 'bounceInLeft',
+		'bounceInRight'     => 'bounceInRight',
+		'bounceInUp'        => 'bounceInUp',
+		'fadeIn'            => 'fadeIn',
+		'fadeInDown'        => 'fadeInDown',
+		'fadeInDownBig'     => 'fadeInDownBig',
+		'fadeInLeft'        => 'fadeInLeft',
+		'fadeInLeftBig'     => 'fadeInLeftBig',
+		'fadeInRight'       => 'fadeInRight',
+		'fadeInRightBig'    => 'fadeInRightBig',
+		'fadeInUp'          => 'fadeInUp',
+		'fadeInUpBig'       => 'fadeInUpBig',
+		'flipInX'           => 'flipInX',
+		'flipInY'           => 'flipInY',
+		'lightSpeedIn'      => 'lightSpeedIn',
+		'rotateIn'          => 'rotateIn',
+		'rotateInDownLeft'  => 'rotateInDownLeft',
+		'rotateInDownRight' => 'rotateInDownRight',
+		'rotateInUpLeft'    => 'rotateInUpLeft',
+		'rotateInUpRight'   => 'rotateInUpRight',
+		'hinge'             => 'hinge',
+		'rollIn'            => 'rollIn',
+		'zoomIn'            => 'zoomIn',
+		'zoomInDown'        => 'zoomInDown',
+		'zoomInRight'       => 'zoomInRight',
+		'zoomInUp'          => 'zoomInUp',
+		'slideInDown'       => 'slideInDown',
+		'slideInLeft'       => 'slideInLeft',
+		'slideInRight'      => 'slideInRight',
+		'slideInUp'         => 'slideInUp',
+	);
 }
 
 /**
@@ -546,69 +553,306 @@ function bc_rb_option_default_value() {
  */
 function bc_rb_currency_lists() {
 	return array(
-		'USD' => array( 'name' => 'US Dollar', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'AED' => array( 'name' => 'United Arab Emirates Dirham', 'symbol' => 'د.إ', 'hex' => '&#x62f;&#x2e;&#x625;' ),
-		'ANG' => array( 'name' => 'NL Antillian Guilder', 'symbol' => 'ƒ', 'hex' => '&#x192;' ),
-		'ARS' => array( 'name' => 'Argentine Peso', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'AUD' => array( 'name' => 'Australian Dollar', 'symbol' => 'A$', 'hex' => '&#x41;&#x24;' ),
-		'BRL' => array( 'name' => 'Brazilian Real', 'symbol' => 'R$', 'hex' => '&#x52;&#x24;' ),
-		'BSD' => array( 'name' => 'Bahamian Dollar', 'symbol' => 'B$', 'hex' => '&#x42;&#x24;' ),
-		'CAD' => array( 'name' => 'Canadian Dollar', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'CHF' => array( 'name' => 'Swiss Franc', 'symbol' => 'CHF', 'hex' => '&#x43;&#x48;&#x46;' ),
-		'CLP' => array( 'name' => 'Chilean Peso', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'CNY' => array( 'name' => 'Chinese Yuan Renminbi', 'symbol' => '¥', 'hex' => '&#xa5;' ),
-		'COP' => array( 'name' => 'Colombian Peso', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'CZK' => array( 'name' => 'Czech Koruna', 'symbol' => 'Kč', 'hex' => '&#x4b;&#x10d;' ),
-		'DKK' => array( 'name' => 'Danish Krone', 'symbol' => 'kr', 'hex' => '&#x6b;&#x72;' ),
-		'EUR' => array( 'name' => 'Euro', 'symbol' => '€', 'hex' => '&#x20ac;' ),
-		'FJD' => array( 'name' => 'Fiji Dollar', 'symbol' => 'FJ$', 'hex' => '&#x46;&#x4a;&#x24;' ),
-		'GBP' => array( 'name' => 'British Pound', 'symbol' => '£', 'hex' => '&#xa3;' ),
-		'GHS' => array( 'name' => 'Ghanaian New Cedi', 'symbol' => 'GH₵', 'hex' => '&#x47;&#x48;&#x20b5;' ),
-		'GTQ' => array( 'name' => 'Guatemalan Quetzal', 'symbol' => 'Q', 'hex' => '&#x51;' ),
-		'HKD' => array( 'name' => 'Hong Kong Dollar', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'HNL' => array( 'name' => 'Honduran Lempira', 'symbol' => 'L', 'hex' => '&#x4c;' ),
-		'HRK' => array( 'name' => 'Croatian Kuna', 'symbol' => 'kn', 'hex' => '&#x6b;&#x6e;' ),
-		'HUF' => array( 'name' => 'Hungarian Forint', 'symbol' => 'Ft', 'hex' => '&#x46;&#x74;' ),
-		'IDR' => array( 'name' => 'Indonesian Rupiah', 'symbol' => 'Rp', 'hex' => '&#x52;&#x70;' ),
-		'ILS' => array( 'name' => 'Israeli New Shekel', 'symbol' => '₪', 'hex' => '&#x20aa;' ),
-		'INR' => array( 'name' => 'Indian Rupee', 'symbol' => '₹', 'hex' => '&#x20b9;' ),
-		'ISK' => array( 'name' => 'Iceland Krona', 'symbol' => 'kr', 'hex' => '&#x6b;&#x72;' ),
-		'JMD' => array( 'name' => 'Jamaican Dollar', 'symbol' => 'J$', 'hex' => '&#x4a;&#x24;' ),
-		'JPY' => array( 'name' => 'Japanese Yen', 'symbol' => '¥', 'hex' => '&#xa5;' ),
-		'KRW' => array( 'name' => 'South-Korean Won', 'symbol' => '₩', 'hex' => '&#x20a9;' ),
-		'LKR' => array( 'name' => 'Sri Lanka Rupee', 'symbol' => '₨', 'hex' => '&#x20a8;' ),
-		'MAD' => array( 'name' => 'Moroccan Dirham', 'symbol' => '.د.م', 'hex' => '&#x2e;&#x62f;&#x2e;&#x645;' ),
-		'MMK' => array( 'name' => 'Myanmar Kyat', 'symbol' => 'K', 'hex' => '&#x4b;' ),
-		'MXN' => array( 'name' => 'Mexican Peso', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'MYR' => array( 'name' => 'Malaysian Ringgit', 'symbol' => 'RM', 'hex' => '&#x52;&#x4d;' ),
-		'NOK' => array( 'name' => 'Norwegian Kroner', 'symbol' => 'kr', 'hex' => '&#x6b;&#x72;' ),
-		'NZD' => array( 'name' => 'New Zealand Dollar', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'PAB' => array( 'name' => 'Panamanian Balboa', 'symbol' => 'B/.', 'hex' => '&#x42;&#x2f;&#x2e;' ),
-		'PEN' => array( 'name' => 'Peruvian Nuevo Sol', 'symbol' => 'S/.', 'hex' => '&#x53;&#x2f;&#x2e;' ),
-		'PHP' => array( 'name' => 'Philippine Peso', 'symbol' => '₱', 'hex' => '&#x20b1;' ),
-		'PKR' => array( 'name' => 'Pakistan Rupee', 'symbol' => '₨', 'hex' => '&#x20a8;' ),
-		'PLN' => array( 'name' => 'Polish Zloty', 'symbol' => 'zł', 'hex' => '&#x7a;&#x142;' ),
-		'RON' => array( 'name' => 'Romanian New Lei', 'symbol' => 'lei', 'hex' => '&#x6c;&#x65;&#x69;' ),
-		'RSD' => array( 'name' => 'Serbian Dinar', 'symbol' => 'RSD', 'hex' => '&#x52;&#x53;&#x44;' ),
-		'RUB' => array( 'name' => 'Russian Rouble', 'symbol' => 'руб', 'hex' => '&#x440;&#x443;&#x431;' ),
-		'SEK' => array( 'name' => 'Swedish Krona', 'symbol' => 'kr', 'hex' => '&#x6b;&#x72;' ),
-		'SGD' => array( 'name' => 'Singapore Dollar', 'symbol' => 'S$', 'hex' => '&#x53;&#x24;' ),
-		'THB' => array( 'name' => 'Thai Baht', 'symbol' => '฿', 'hex' => '&#xe3f;' ),
-		'TND' => array( 'name' => 'Tunisian Dinar', 'symbol' => 'DT', 'hex' => '&#x44;&#x54;' ),
-		'TRY' => array( 'name' => 'Turkish Lira', 'symbol' => 'TL', 'hex' => '&#x54;&#x4c;' ),
-		'TTD' => array( 'name' => 'Trinidad/Tobago Dollar', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'TWD' => array( 'name' => 'Taiwan Dollar', 'symbol' => 'NT$', 'hex' => '&#x4e;&#x54;&#x24;' ),
-		'VEF' => array( 'name' => 'Venezuelan Bolivar Fuerte', 'symbol' => 'Bs', 'hex' => '&#x42;&#x73;' ),
-		'VND' => array( 'name' => 'Vietnamese Dong', 'symbol' => '₫', 'hex' => '&#x20ab;' ),
-		'XAF' => array( 'name' => 'CFA Franc BEAC', 'symbol' => 'FCFA', 'hex' => '&#x46;&#x43;&#x46;&#x41;' ),
-		'XCD' => array( 'name' => 'East Caribbean Dollar', 'symbol' => '$', 'hex' => '&#x24;' ),
-		'XPF' => array( 'name' => 'CFP Franc', 'symbol' => 'F', 'hex' => '&#x46;' ),
-		'ZAR' => array( 'name' => 'South African Rand', 'symbol' => 'R', 'hex' => '&#x52;' ),
+		'USD' => array(
+			'name'   => 'US Dollar',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'AED' => array(
+			'name'   => 'United Arab Emirates Dirham',
+			'symbol' => 'د.إ',
+			'hex'    => '&#x62f;&#x2e;&#x625;',
+		),
+		'ANG' => array(
+			'name'   => 'NL Antillian Guilder',
+			'symbol' => 'ƒ',
+			'hex'    => '&#x192;',
+		),
+		'ARS' => array(
+			'name'   => 'Argentine Peso',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'AUD' => array(
+			'name'   => 'Australian Dollar',
+			'symbol' => 'A$',
+			'hex'    => '&#x41;&#x24;',
+		),
+		'BRL' => array(
+			'name'   => 'Brazilian Real',
+			'symbol' => 'R$',
+			'hex'    => '&#x52;&#x24;',
+		),
+		'BSD' => array(
+			'name'   => 'Bahamian Dollar',
+			'symbol' => 'B$',
+			'hex'    => '&#x42;&#x24;',
+		),
+		'CAD' => array(
+			'name'   => 'Canadian Dollar',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'CHF' => array(
+			'name'   => 'Swiss Franc',
+			'symbol' => 'CHF',
+			'hex'    => '&#x43;&#x48;&#x46;',
+		),
+		'CLP' => array(
+			'name'   => 'Chilean Peso',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'CNY' => array(
+			'name'   => 'Chinese Yuan Renminbi',
+			'symbol' => '¥',
+			'hex'    => '&#xa5;',
+		),
+		'COP' => array(
+			'name'   => 'Colombian Peso',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'CZK' => array(
+			'name'   => 'Czech Koruna',
+			'symbol' => 'Kč',
+			'hex'    => '&#x4b;&#x10d;',
+		),
+		'DKK' => array(
+			'name'   => 'Danish Krone',
+			'symbol' => 'kr',
+			'hex'    => '&#x6b;&#x72;',
+		),
+		'EUR' => array(
+			'name'   => 'Euro',
+			'symbol' => '€',
+			'hex'    => '&#x20ac;',
+		),
+		'FJD' => array(
+			'name'   => 'Fiji Dollar',
+			'symbol' => 'FJ$',
+			'hex'    => '&#x46;&#x4a;&#x24;',
+		),
+		'GBP' => array(
+			'name'   => 'British Pound',
+			'symbol' => '£',
+			'hex'    => '&#xa3;',
+		),
+		'GHS' => array(
+			'name'   => 'Ghanaian New Cedi',
+			'symbol' => 'GH₵',
+			'hex'    => '&#x47;&#x48;&#x20b5;',
+		),
+		'GTQ' => array(
+			'name'   => 'Guatemalan Quetzal',
+			'symbol' => 'Q',
+			'hex'    => '&#x51;',
+		),
+		'HKD' => array(
+			'name'   => 'Hong Kong Dollar',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'HNL' => array(
+			'name'   => 'Honduran Lempira',
+			'symbol' => 'L',
+			'hex'    => '&#x4c;',
+		),
+		'HRK' => array(
+			'name'   => 'Croatian Kuna',
+			'symbol' => 'kn',
+			'hex'    => '&#x6b;&#x6e;',
+		),
+		'HUF' => array(
+			'name'   => 'Hungarian Forint',
+			'symbol' => 'Ft',
+			'hex'    => '&#x46;&#x74;',
+		),
+		'IDR' => array(
+			'name'   => 'Indonesian Rupiah',
+			'symbol' => 'Rp',
+			'hex'    => '&#x52;&#x70;',
+		),
+		'ILS' => array(
+			'name'   => 'Israeli New Shekel',
+			'symbol' => '₪',
+			'hex'    => '&#x20aa;',
+		),
+		'INR' => array(
+			'name'   => 'Indian Rupee',
+			'symbol' => '₹',
+			'hex'    => '&#x20b9;',
+		),
+		'ISK' => array(
+			'name'   => 'Iceland Krona',
+			'symbol' => 'kr',
+			'hex'    => '&#x6b;&#x72;',
+		),
+		'JMD' => array(
+			'name'   => 'Jamaican Dollar',
+			'symbol' => 'J$',
+			'hex'    => '&#x4a;&#x24;',
+		),
+		'JPY' => array(
+			'name'   => 'Japanese Yen',
+			'symbol' => '¥',
+			'hex'    => '&#xa5;',
+		),
+		'KRW' => array(
+			'name'   => 'South-Korean Won',
+			'symbol' => '₩',
+			'hex'    => '&#x20a9;',
+		),
+		'LKR' => array(
+			'name'   => 'Sri Lanka Rupee',
+			'symbol' => '₨',
+			'hex'    => '&#x20a8;',
+		),
+		'MAD' => array(
+			'name'   => 'Moroccan Dirham',
+			'symbol' => '.د.م',
+			'hex'    => '&#x2e;&#x62f;&#x2e;&#x645;',
+		),
+		'MMK' => array(
+			'name'   => 'Myanmar Kyat',
+			'symbol' => 'K',
+			'hex'    => '&#x4b;',
+		),
+		'MXN' => array(
+			'name'   => 'Mexican Peso',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'MYR' => array(
+			'name'   => 'Malaysian Ringgit',
+			'symbol' => 'RM',
+			'hex'    => '&#x52;&#x4d;',
+		),
+		'NOK' => array(
+			'name'   => 'Norwegian Kroner',
+			'symbol' => 'kr',
+			'hex'    => '&#x6b;&#x72;',
+		),
+		'NZD' => array(
+			'name'   => 'New Zealand Dollar',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'PAB' => array(
+			'name'   => 'Panamanian Balboa',
+			'symbol' => 'B/.',
+			'hex'    => '&#x42;&#x2f;&#x2e;',
+		),
+		'PEN' => array(
+			'name'   => 'Peruvian Nuevo Sol',
+			'symbol' => 'S/.',
+			'hex'    => '&#x53;&#x2f;&#x2e;',
+		),
+		'PHP' => array(
+			'name'   => 'Philippine Peso',
+			'symbol' => '₱',
+			'hex'    => '&#x20b1;',
+		),
+		'PKR' => array(
+			'name'   => 'Pakistan Rupee',
+			'symbol' => '₨',
+			'hex'    => '&#x20a8;',
+		),
+		'PLN' => array(
+			'name'   => 'Polish Zloty',
+			'symbol' => 'zł',
+			'hex'    => '&#x7a;&#x142;',
+		),
+		'RON' => array(
+			'name'   => 'Romanian New Lei',
+			'symbol' => 'lei',
+			'hex'    => '&#x6c;&#x65;&#x69;',
+		),
+		'RSD' => array(
+			'name'   => 'Serbian Dinar',
+			'symbol' => 'RSD',
+			'hex'    => '&#x52;&#x53;&#x44;',
+		),
+		'RUB' => array(
+			'name'   => 'Russian Rouble',
+			'symbol' => 'руб',
+			'hex'    => '&#x440;&#x443;&#x431;',
+		),
+		'SEK' => array(
+			'name'   => 'Swedish Krona',
+			'symbol' => 'kr',
+			'hex'    => '&#x6b;&#x72;',
+		),
+		'SGD' => array(
+			'name'   => 'Singapore Dollar',
+			'symbol' => 'S$',
+			'hex'    => '&#x53;&#x24;',
+		),
+		'THB' => array(
+			'name'   => 'Thai Baht',
+			'symbol' => '฿',
+			'hex'    => '&#xe3f;',
+		),
+		'TND' => array(
+			'name'   => 'Tunisian Dinar',
+			'symbol' => 'DT',
+			'hex'    => '&#x44;&#x54;',
+		),
+		'TRY' => array(
+			'name'   => 'Turkish Lira',
+			'symbol' => 'TL',
+			'hex'    => '&#x54;&#x4c;',
+		),
+		'TTD' => array(
+			'name'   => 'Trinidad/Tobago Dollar',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'TWD' => array(
+			'name'   => 'Taiwan Dollar',
+			'symbol' => 'NT$',
+			'hex'    => '&#x4e;&#x54;&#x24;',
+		),
+		'VEF' => array(
+			'name'   => 'Venezuelan Bolivar Fuerte',
+			'symbol' => 'Bs',
+			'hex'    => '&#x42;&#x73;',
+		),
+		'VND' => array(
+			'name'   => 'Vietnamese Dong',
+			'symbol' => '₫',
+			'hex'    => '&#x20ab;',
+		),
+		'XAF' => array(
+			'name'   => 'CFA Franc BEAC',
+			'symbol' => 'FCFA',
+			'hex'    => '&#x46;&#x43;&#x46;&#x41;',
+		),
+		'XCD' => array(
+			'name'   => 'East Caribbean Dollar',
+			'symbol' => '$',
+			'hex'    => '&#x24;',
+		),
+		'XPF' => array(
+			'name'   => 'CFP Franc',
+			'symbol' => 'F',
+			'hex'    => '&#x46;',
+		),
+		'ZAR' => array(
+			'name'   => 'South African Rand',
+			'symbol' => 'R',
+			'hex'    => '&#x52;',
+		),
 	);
 }
 
+
 /**
- * Show error or success
+ *  Show error or success.
+ *
+ * @param bool $bool Boolean.
+ *
+ * @return string
  */
 function bc_success_error( $bool ) {
 	$bool = filter_var( $bool, FILTER_VALIDATE_BOOLEAN );
@@ -621,7 +865,7 @@ function bc_success_error( $bool ) {
 }
 
 /**
- * Get current user email address
+ * Get current user email address.
  */
 function bc_get_current_user_email() {
 	$current_user = wp_get_current_user();
@@ -630,7 +874,7 @@ function bc_get_current_user_email() {
 }
 
 /**
- * Plugin Translation
+ * Plugin Translation.
  */
 function bc_load_languages() {
 	load_plugin_textdomain( 'random-banner', false, dirname( BC_RB_PLUGIN_BASENAME ) . '/languages/' );
@@ -654,6 +898,11 @@ function bc_rb_sanitize_text_field( $var ) {
 	return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
 }
 
+/**
+ * Session Start.
+ *
+ * @return void
+ */
 function bc_rb_session_start() {
 	if ( ! session_id() ) {
 		session_start(

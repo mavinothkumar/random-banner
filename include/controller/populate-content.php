@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param String $message Message.
  */
 function populate_data( $db_status, $message ) {
-	if ( $db_status == 'success' ) {
+	if ( 'success' === $db_status ) {
 		$rows = bc_rb_get_all_row();
 		if ( $rows ) {
 			$content = loop_data( $rows );
@@ -51,7 +51,7 @@ function loop_data( $rows ) {
 	$content = '';
 
 	foreach ( $rows as $row ) {
-		if ( $row->banner_type == 'upload' ) {
+		if ( 'upload' === $row->banner_type ) {
 			$content .= '<div class="row single_upload ' . sanitize_title( $row->category ) . '">
 <form>
 <input type="hidden" name="banner_type" value="' . esc_attr( $row->banner_type ) . '" />
@@ -119,7 +119,7 @@ function loop_data( $rows ) {
       </form>
       </div>';
 		}
-		if ( $row->banner_type == 'script' ) {
+		if ( 'script' === $row->banner_type ) {
 			$content .= '<div class="row single_upload ' . esc_attr( $row->category ) . '">
 <form>
 <input type="hidden" name="banner_type" value="' . esc_attr( $row->banner_type ) . '" />
@@ -162,8 +162,8 @@ function loop_data( $rows ) {
  */
 function bc_rb_check_banner_model_and_type( $post ) {
 	$banner           = array();
-	$banner['type']   = ( $post['banner_type'] == 'upload' ) ? bc_rb_upload_banner_model( $post ) : bc_rb_script_banner_model( $post );
-	$banner['option'] = ( $post['banner_type'] == 'upload' ) ? bc_rb_upload_banner_option_model() : bc_rb_script_banner_option_model();
+	$banner['type']   = ( 'upload' === $post['banner_type'] ) ? bc_rb_upload_banner_model( $post ) : bc_rb_script_banner_model( $post );
+	$banner['option'] = ( 'upload' === $post['banner_type'] ) ? bc_rb_upload_banner_option_model() : bc_rb_script_banner_option_model();
 
 	return $banner;
 }
@@ -174,7 +174,7 @@ function bc_rb_check_banner_model_and_type( $post ) {
  * @return mixed
  */
 function get_random_banner_option_value() {
-	$options = unserialize( get_option( 'bc_rb_setting_options' ) );
+	$options = maybe_unserialize( get_option( 'bc_rb_setting_options' ) );
 	if ( ! $options ) {
 		$options = bc_rb_option_default_value();
 	}
@@ -188,7 +188,7 @@ function get_random_banner_option_value() {
  * @return mixed
  */
 function get_popup_option_value() {
-	$popup = unserialize( get_option( 'bc_rb_setting_popup' ) );
+	$popup = maybe_unserialize( get_option( 'bc_rb_setting_popup' ) );
 	if ( ! $popup ) {
 		$popup = bc_rb_popup_default_value();
 	}
@@ -203,7 +203,7 @@ function get_popup_option_value() {
  */
 function bc_rb_open_case() {
 	$option_value = get_random_banner_option_value();
-	if ( $option_value['open'] == 'checked' ) {
+	if ( 'checked' === $option_value['open'] ) {
 		return 'target="_blank"';
 	}
 
@@ -245,7 +245,7 @@ function bc_rb_loop_category( $rows ) {
       <input type="text" name="category" class="category_input form-control" value="' . esc_attr( $row->category ) . '" readonly />
       </div>
       <div class="col-md-6 category_button">';
-		if ( $row->category != 'default' ) {
+		if ( 'default' !== $row->category ) {
 			$content .= '<button class="btn btn-primary bc_rb_button_edit"> ' . esc_html__( 'Edit', 'random-banner' ) . '</button>
       <button class="btn btn-danger bc_rb_button_delete_by_id"> ' . esc_html__( 'Delete', 'random-banner' ) . '</button>';
 		}
@@ -339,7 +339,7 @@ function bc_rb_loop_drop_down( $selected, $values ) {
 	$value = '';
 	foreach ( $values as $single ) {
 		$is_selected = '';
-		if ( $selected == $single ) {
+		if ( $selected === $single ) {
 			$is_selected = 'selected';
 		}
 		$value .= '<option value="' . esc_attr( $single ) . '" ' . esc_attr( $is_selected ) . '>' . ucfirst( esc_attr( $single ) ) . '</option>';
@@ -405,9 +405,7 @@ function bc_rb_check_value_in_session( $get_all_banner ) {
  * @return string
  */
 function bc_rb_loop_campaign_data( $data ) {
-
 	$content = '';
-
 	foreach ( $data as $banner ) {
 		$ads_type_click = $ads_type_impression = '';
 		$content       .= '<div class="row campaign_data bc_random_banner" data-display_name="' . esc_attr( bc_rb_get_user_display_name() ) . '">
@@ -416,10 +414,10 @@ function bc_rb_loop_campaign_data( $data ) {
 <div class="col-md-2">
   <div class="banner_image">';
 
-		if ( $banner->banner_type == 'upload' ) {
+		if ( 'upload' === $banner->banner_type ) {
 			$content .= '<img width=100 height=80 src=" ' . esc_url( $banner->file_url ) . ' ">';
 		}
-		if ( $banner->banner_type == 'script' ) {
+		if ( 'script' === $banner->banner_type ) {
 			$content .= '<img width=100 height=80 src=" ' . esc_url( plugins_url( '/assets/images/script.png', BC_RB_PLUGIN ) ) . ' ">';
 		}
 		$content .= '</div>
@@ -431,18 +429,17 @@ function bc_rb_loop_campaign_data( $data ) {
       <input required readonly type="text" name="slot_name" class="form-control slot_name" placeholder="Slot Name [eg., Top sidebar, left 2nd sidebar]" value="' . esc_attr( $banner->slot_name ) . '"/>
     </div>
     <div class="col-md-6">';
-		if ( $banner->banner_type == 'upload' ) {
+		if ( 'upload' === $banner->banner_type ) {
 			$content .= bc_rb_drop_down( 'ads_type', bc_rb_get_ads_type(), $banner->ads_type, 'disabled', 'ads_type' );
 		}
-		if ( $banner->banner_type == 'script' ) {
+		if ( 'script' === $banner->banner_type ) {
 			$content .= bc_rb_drop_down( 'ads_type', array( 'Cost Per Impression' => 'Cost Per Impression' ), 'Cost Per Impression', 'disabled', 'ads_type' );
 		}
 
 		$content .= '</div>
   </div>';
 
-		if ( $banner->ads_type == 'Cost Per Impression' || $banner->banner_type == 'script' ) {
-			// if ($banner->ads_type == 'Cost Per Impression') {
+		if ( ( 'Cost Per Impression' === $banner->ads_type ) || ( 'script' === $banner->banner_type ) ) {
 			$ads_type_click = 'hide';
 		} else {
 			$ads_type_impression = 'hide';
@@ -527,7 +524,7 @@ add_shortcode( 'bc_random_banner', 'bc_random_banner_shortcode' );
 /**
  * Get all banner
  *
- * @param $category
+ * @param string $category Category.
  *
  * @return array
  */
@@ -540,8 +537,8 @@ function bc_rb_log_get_all_banner( $category ) {
 /**
  * Generate Banners for Sidebar and Shortcode
  *
- * @param $category
- * @param $slider array
+ * @param string $category Category.
+ * @param array  $slider  Slider.
  *
  * @return string
  */
@@ -550,10 +547,10 @@ function bc_rb_generate_banners( $category, array $slider ) {
 	$random_number  = wp_rand( 11111, 999999 );
 	$options        = get_random_banner_option_value();
 
-	if ( ( isset( $options['disable'] ) && 'checked' == $options['disable'] ) || bc_rb_check_user_logged_in( $options ) ) {
+	if ( ( isset( $options['disable'] ) && ( 'checked' === $options['disable'] ) ) || bc_rb_check_user_logged_in( $options ) ) {
 		return $banner_content;
 	}
-	if ( strtolower( $slider['slider'] ) == 'yes' ) {
+	if ( 'yes' === strtolower( $slider['slider'] ) ) {
 		$widgets = bc_rb_log_get_all_banner( $category );
 		if ( ! $widgets ) {
 			$banner_content .= ' <br>' . esc_attr( $options['empty_banner'] ) . '<br>';
@@ -561,12 +558,12 @@ function bc_rb_generate_banners( $category, array $slider ) {
 
 		$banner_content .= '<div class="owl-carousel owl-theme bc_random_banner_slider-' . $random_number . '">';
 		foreach ( $widgets as $widget ) {
-			if ( $widget->banner_type == 'script' ) {
+			if ( 'script' === $widget->banner_type ) {
 				$banner_content .= '<div class="bc_random_banner" data-id="' . (int) $widget->id . '" data-url="' . esc_url( admin_url( 'admin-ajax.php?action=bc_rb_ads_click&nonce=' . wp_create_nonce( 'bc_rb_ads_click' ) ) ) . '">' . bc_rb_convert_to_html( $widget->file_url ) . '</div>';
 			}
-			if ( $widget->banner_type == 'upload' ) {
+			if ( 'upload' === $widget->banner_type ) {
 				$custom_size = '';
-				if ( $widget->automatic == '' ) {
+				if ( '' === $widget->automatic ) {
 					$custom_size = 'style=width:' . (int) $widget->width . 'px; height:' . (int) $widget->height . 'px';
 				}
 				$banner_content .= '<div class="bc_random_banner" data-id="' . (int) $widget->id . '" data-url="' . esc_url( admin_url( 'admin-ajax.php?action=bc_rb_ads_click&nonce=' . wp_create_nonce( 'bc_rb_ads_click' ) ) ) . '"><a ' . bc_rb_open_case() . ' href="' .
@@ -592,14 +589,14 @@ function bc_rb_generate_banners( $category, array $slider ) {
 		if ( ! $widget ) {
 			$banner_content .= ' <br>' . esc_attr( $options['empty_banner'] ) . '<br>';
 		} else {
-			if ( $widget->banner_type == 'script' ) {
+			if ( 'script' === $widget->banner_type ) {
 				$banner_content .= '<div class="bc_random_banner script_bc_rb_widget" data-id="' . (int) $widget->id . '" data-url="' . esc_url( admin_url( 'admin-ajax.php?action=bc_rb_ads_click&nonce=' . wp_create_nonce( 'bc_rb_ads_click' ) ) ) . '">'
 								   . bc_rb_convert_to_html( $widget->file_url ) .
 								   '</div>';
 			}
-			if ( $widget->banner_type == 'upload' ) {
+			if ( 'upload' === $widget->banner_type ) {
 				$custom_size = '';
-				if ( $widget->automatic == '' ) {
+				if ( '' === $widget->automatic ) {
 					$custom_size = 'style=width:' . (int) $widget->width . 'px; height:' . (int) $widget->height . 'px';
 				}
 				$banner_content .= '<div class="bc_random_banner" data-id="' . (int) $widget->id . '" data-url="' . esc_url( admin_url( 'admin-ajax.php?action=bc_rb_ads_click&nonce=' . wp_create_nonce( 'bc_rb_ads_click' ) ) ) . '"><a ' . bc_rb_open_case() . ' href="' .
@@ -627,7 +624,7 @@ function bc_rb_check_ads_required( $content ) {
 	global $post;
 	$settings = get_option( 'bc_rb_insert_short_code_values', bc_rb_category_default_values() );
 	if ( is_string( $settings ) ) {
-		$settings = unserialize( $settings );
+		$settings = maybe_unserialize( $settings );
 	}
 
 	if ( ! isset( $settings['dots'] ) ) {
@@ -635,11 +632,11 @@ function bc_rb_check_ads_required( $content ) {
 	}
 
 	$disable = get_post_meta( $post->ID, 'bc_rb_disable_banner', true );
-	if ( ! is_array( $settings ) || count( $settings ) == 0 || $settings['enable_insert'] == 'false' || $disable == 'yes' ) {
+	if ( ! is_array( $settings ) || ( 0 === count( $settings ) ) || ( 'false' === $settings['enable_insert'] ) || 'yes' === $disable ) {
 		return $content;
 	}
 
-	if ( $settings['post_page'] == 'post' && is_single() ) {
+	if ( ( 'post' === $settings['post_page'] ) && is_single() ) {
 		return bc_rb_insert_short_code_into_post_pages( $content, $settings );
 	}
 
@@ -690,13 +687,14 @@ add_action( 'save_post', 'bc_rb_save_post_meta' );
  * @return mixed
  */
 function bc_rb_save_post_meta( $post_id ) {
+	$post_payload = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 	// Check if our nonce is set.
-	if ( ! isset( $_POST['bc_rb_save_post_meta_nonce'] ) ) {
+	if ( ! isset( $post_payload['bc_rb_save_post_meta_nonce'] ) ) {
 		return $post_id;
 	}
 
 	// Verify that the nonce is valid.
-	if ( ! wp_verify_nonce( $_POST['bc_rb_save_post_meta_nonce'], 'bc_rb_save_post_meta_nonce' ) ) {
+	if ( ! wp_verify_nonce( $post_payload['bc_rb_save_post_meta_nonce'], 'bc_rb_save_post_meta_nonce' ) ) {
 		return $post_id;
 	}
 
@@ -706,8 +704,8 @@ function bc_rb_save_post_meta( $post_id ) {
 	}
 
 	// OK to save meta data.
-	if ( isset( $_POST['bc_rb_disable_banner'] ) ) {
-		update_post_meta( $post_id, 'bc_rb_disable_banner', bc_rb_sanitize_text_field( $_POST['bc_rb_disable_banner'] ) );
+	if ( isset( $post_payload['bc_rb_disable_banner'] ) ) {
+		update_post_meta( $post_id, 'bc_rb_disable_banner', bc_rb_sanitize_text_field( $post_payload['bc_rb_disable_banner'] ) );
 	} else {
 		update_post_meta( $post_id, 'bc_rb_disable_banner', 'no' );
 	}
