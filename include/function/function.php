@@ -897,18 +897,3 @@ function bc_rb_sanitize_text_field( $var ) {
 
 	return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
 }
-
-/**
- * Session Start.
- *
- * @return void
- */
-function bc_rb_session_start() {
-	if ( ! session_id() ) {
-		session_start(
-			array(
-				'read_and_close' => true,
-			)
-		);
-	}
-}

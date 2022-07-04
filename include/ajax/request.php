@@ -135,7 +135,6 @@ function bc_rb_save_insert_post() {
 /**
  * Delete all DBs and its options
  */
-
 function bc_delete_dbs() {
 	if ( isset( $_REQUEST['nonce'] ) && ! empty( $_REQUEST['nonce'] ) ) {
 		bc_rb_check_nonce( $_REQUEST['bc_delete_dbs'], 'bc_delete_dbs' );

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Include all necessary files.
+ */
 require_once BC_RB_PLUGIN_DIR . '/install-uninstall.php';
 require_once BC_RB_PLUGIN_DIR . '/include/models/model.php';
 require_once BC_RB_PLUGIN_DIR . '/include/ajax/request.php';

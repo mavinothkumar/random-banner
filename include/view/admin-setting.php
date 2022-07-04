@@ -64,27 +64,27 @@ function bc_random_banner_settings() {
 	<div class="bc_rb container bc_random_banner" data-display_name="<?php echo esc_attr( bc_rb_get_user_display_name() ); ?>">
 		<div class="row">
 			<div class="col-md-7 p-20">
-				<div class="btn-group">
-					<button type="button" data-toggle="dropdown" class="btn btn-primary rb_btn dropdown-toggle">
+				<div class="dropdown">
+					<button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-primary rb_btn dropdown-toggle" id="bc_rb_dropdown_button">
 					<span class="glyphicon glyphicon-plus"></span>
 					<?php esc_html_e( 'Add New Banner', 'random-banner' ); ?>
 						<span class="caret"></span>
 					</button>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu"aria-labelledby="bc_rb_dropdown_button">
 						<li class="add_new_upload" data-item="add_new_upload">
-							<a href="#">
+							<a href="#" class="dropdown-item">
 								<span class="glyphicon glyphicon-picture"></span>
 								<?php esc_html_e( 'Image Banner', 'random-banner' ); ?>
 							</a>
 						</li>
 						<li class="add_new_script" data-item="add_new_script">
-							<a href="#">
+							<a href="#"  class="dropdown-item">
 								<span class="glyphicon glyphicon-align-left"></span>
 								<?php esc_html_e( 'Script Banner', 'random-banner' ); ?>
 							</a>
 						</li>
 						<li class="paypal_donation_button" data-item="add_new_swf">
-							<a href="#">
+							<a href="#"  class="dropdown-item">
 								<span class="glyphicon glyphicon-facetime-video"></span>
 								<?php esc_html_e( 'SWF Banner', 'random-banner' ); ?>
 							</a>
@@ -93,19 +93,21 @@ function bc_random_banner_settings() {
 				</div>
 			</div>
 			<div class="col-md-5 p-10">
-				<div class="col-md-5 table-bordered p-10 text-center">
-					<?php echo wp_kses_post( bc_rb_show_payment_details() ); ?>
-				</div>
-				<div class="col-md-7 bc_plugin_demo" data-email="<?php echo esc_attr( bc_get_current_user_email() ); ?>">
-					<div class="flex table-bordered p-10">
-						<div class="p-r-20">
-							<img src="<?php echo esc_url( plugins_url( 'assets/images/demo.png', BC_RB_PLUGIN ) ); ?>" alt="demo image"/>
-						</div>
-						<div class="text-center">
-							<a href="https://www.randombanners.com">
-								<strong>Click Here for</strong>
-								<h4>Live Demo</h4>
-							</a>
+				<div class="row">
+					<div class="col-md-5 table-bordered p-10 text-center">
+						<?php echo wp_kses_post( bc_rb_show_payment_details() ); ?>
+					</div>
+					<div class="col-md-7 bc_plugin_demo" data-email="<?php echo esc_attr( bc_get_current_user_email() ); ?>">
+						<div class="flex table-bordered p-10">
+							<div class="p-r-20">
+								<img src="<?php echo esc_url( plugins_url( 'assets/images/demo.png', BC_RB_PLUGIN ) ); ?>" alt="demo image"/>
+							</div>
+							<div class="text-center">
+								<a href="https://www.randombanners.com">
+									<strong>Click Here for</strong>
+									<h4>Live Demo</h4>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -171,657 +173,658 @@ function bc_random_banner_option() {
 			<div class="col-md-12">
 				<h1>
 					<?php esc_html_e( 'Random Banner Settings', 'random-banner' ); ?>
-					<span class="pull-right"><?php echo wp_kses_post( bc_rb_show_payment_details() ); ?></span>
+					<span class="float-end"><?php echo wp_kses_post( bc_rb_show_payment_details() ); ?></span>
 				</h1>
 			</div>
 		</div>
 		<div id="content" class="padding_top_20">
-			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-				<li class="active">
-					<a href="#category" data-toggle="tab"><?php esc_html_e( 'Category', 'random-banner' ); ?></a>
+			<ul class="nav nav-pills mb-3" id="pills-tab bc_rb_settings_tab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link active" data-bs-toggle="pill" data-bs-target="#category" type="button" role="tab" aria-controls="category" aria-selected="true"><?php
+					 esc_html_e( 'Category', 'random-banner' ); ?></button>
 				</li>
-				<li>
-					<a href="#post_page" data-toggle="tab"><?php esc_html_e( 'Insert Banners inside the Post/Page', 'random-banner' ); ?></a>
+				<li class="nav-item" role="presentation">
+					<button  class="nav-link" data-bs-toggle="pill" data-bs-target="#post_page" type="button" role="tab" aria-controls="post_page" aria-selected="true"><?php esc_html_e( 'Insert Banners inside the Post/Page', 'random-banner' ); ?></button>
 				</li>
-				<li>
-					<a href="#Popup" data-toggle="tab"><?php esc_html_e( 'Popup', 'random-banner' ); ?></a>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link"  data-bs-toggle="pill" data-bs-target="#Popup" type="button" role="tab" aria-controls="Popup" aria-selected="true"><?php esc_html_e( 'Popup', 'random-banner' ); ?></button>
 				</li>
-				<li>
-					<a href="#Statistics" data-toggle="tab"><?php esc_html_e( 'Statistics', 'random-banner' ); ?></a>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link"  data-bs-toggle="pill" data-bs-target="#Statistics" type="button" role="tab" aria-controls="Statistics" aria-selected="true"><?php esc_html_e( 'Statistics', 'random-banner' ); ?></button>
 				</li>
-				<li>
-						<a href="#FloatingAds" data-toggle="tab"><?php esc_html_e( 'Floating Ads', 'random-banner' ); ?></a>
+				<li class="nav-item" role="presentation">
+						<button class="nav-link"  data-bs-toggle="pill" data-bs-target="#FloatingAds" type="button" role="tab" aria-controls="FloatingAds" aria-selected="true"><?php esc_html_e( 'Floating Ads', 'random-banner' ); ?></button>
 					</li>
-				<li>
-					<a href="#Others" data-toggle="tab"><?php esc_html_e( 'Others', 'random-banner' ); ?></a>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link"  data-bs-toggle="pill" data-bs-target="#Others" type="button" role="tab" aria-controls="Others" aria-selected="true"><?php esc_html_e( 'Others', 'random-banner' ); ?></button>
 				</li>
 			</ul>
 			<div id="my-tab-content" class="tab-content">
-			<div class="tab-pane p-20 active" id="category">
-					<div class="col-md-6 category" data-display_name="<?php echo esc_attr( bc_rb_get_user_display_name() ); ?>">
-						<div class="row">
-							<div class="col-md-12 p-b-20">
-								<button class="btn btn-primary new_category">
-									<span class="glyphicon glyphicon-plus"></span>
-									<?php esc_html_e( 'Add New Category', 'random-banner' ); ?>
-								</button>
-							</div>
-							<div class="col-md-12 category_items"
-							data-payment_info="<?php echo esc_attr( get_option( 'bc_rb_payment_info' ) ); ?>"
-							data-donation_later="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_donation_later&nonce=' . wp_create_nonce( 'bc_rb_donation_later' ) ) ); ?>"
-							data-save="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_save_category&nonce=' . wp_create_nonce( 'bc_rb_save_category' ) ) ); ?>"
-							data-delete="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_delete_category&nonce=' . wp_create_nonce( 'bc_rb_delete_category' ) ) ); ?>">
-								<?php echo bc_rb_loop_category( $category ); ?>
-							</div>
-						</div>
-					</div>
-			</div>
-			<div class="tab-pane p-20" id="post_page">
-				<div class="row">
-					<div class="col-md-7">
-						<form data-save="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_save_insert_post&nonce=' . wp_create_nonce( 'bc_rb_save_insert_post' ) ) ); ?>">
-						<div class="bc_rb_insert_post_shortcode padding_top_20">
-							<div class="bc_rb_check_insert_post">
-								<h4><?php esc_html_e( 'Enable Banner to all Post and Pages?', 'random-banner' ); ?></h4>
-								<select name="bc_rb_category_values[enable_insert]" class="form-control bc_rb_enable_insert">
-									<?php echo bc_rb_get_slider_loop( $insert_short_code_values['enable_insert'] ); ?>
-								</select>
-							</div>
+                <div class="tab-pane p-20 fade show active" id="category">
+                        <div class="col-md-6 category" data-display_name="<?php echo esc_attr( bc_rb_get_user_display_name() ); ?>">
+                            <div class="row">
+                                <div class="col-md-12 p-b-20">
+                                    <button class="btn btn-primary new_category">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        <?php esc_html_e( 'Add New Category', 'random-banner' ); ?>
+                                    </button>
+                                </div>
+                                <div class="col-md-12 category_items"
+                                data-payment_info="<?php echo esc_attr( get_option( 'bc_rb_payment_info' ) ); ?>"
+                                data-donation_later="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_donation_later&nonce=' . wp_create_nonce( 'bc_rb_donation_later' ) ) ); ?>"
+                                data-save="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_save_category&nonce=' . wp_create_nonce( 'bc_rb_save_category' ) ) ); ?>"
+                                data-delete="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_delete_category&nonce=' . wp_create_nonce( 'bc_rb_delete_category' ) ) ); ?>">
+                                    <?php echo bc_rb_loop_category( $category ); ?>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="tab-pane p-20 fade" id="post_page">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <form data-save="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_save_insert_post&nonce=' . wp_create_nonce( 'bc_rb_save_insert_post' ) ) ); ?>">
+                            <div class="bc_rb_insert_post_shortcode padding_top_20">
+                                <div class="bc_rb_check_insert_post">
+                                    <h5><?php esc_html_e( 'Enable Banner to all Post and Pages?', 'random-banner' ); ?></h5>
+                                    <select name="bc_rb_category_values[enable_insert]" class="form-control bc_rb_enable_insert">
+                                        <?php echo bc_rb_get_slider_loop( $insert_short_code_values['enable_insert'] ); ?>
+                                    </select>
+                                </div>
 
-							<div class="row bc_rb_enable_insert_post_shortcode hide">
-								<div class="col-md-6">
-									<h4><?php esc_html_e( 'Category Name', 'random-banner' ); ?></h4>
-									<?php echo bc_rb_drop_down( 'bc_rb_category_values[category_name]', bc_rb_get_category_by_array(), $insert_short_code_values['category_name'] ); ?>
+                                <div class="row bc_rb_enable_insert_post_shortcode hide">
+                                    <div class="col-md-6">
+                                        <h5><?php esc_html_e( 'Category Name', 'random-banner' ); ?></h5>
+                                        <?php echo bc_rb_drop_down( 'bc_rb_category_values[category_name]', bc_rb_get_category_by_array(), $insert_short_code_values['category_name'] ); ?>
 
-									<h4><?php esc_html_e( 'Slider', 'random-banner' ); ?> [Pro Version only]</h4>
-									<select disabled name="bc_rb_category_values[slider]" readonly class="form-control">
-										<option value="No">No</option>
-									</select>
+                                        <h5><?php esc_html_e( 'Slider', 'random-banner' ); ?> [Pro Version only]</h5>
+                                        <select disabled name="bc_rb_category_values[slider]" readonly class="form-control">
+                                            <option value="No">No</option>
+                                        </select>
 
-									<h4><?php esc_html_e( 'Autoplay', 'random-banner' ); ?> [Pro Version only]</h4>
-									<select disabled name="bc_rb_category_values[autoplay]" readonly class="form-control">
-										<option value="True">True</option>
-									</select>
+                                        <h5><?php esc_html_e( 'Autoplay', 'random-banner' ); ?> [Pro Version only]</h5>
+                                        <select disabled name="bc_rb_category_values[autoplay]" readonly class="form-control">
+                                            <option value="True">True</option>
+                                        </select>
 
-									<h4><?php esc_html_e( 'Delay', 'random-banner' ); ?> [Pro Version only]</h4>
-									<select disabled name="bc_rb_category_values[delay]" readonly class="form-control">
-										<option value="3000">3000</option>
-									</select>
-								</div>
-								<div class="col-md-6">
-									<h4><?php esc_html_e( 'Loop', 'random-banner' ); ?> [Pro Version only]</h4>
-									<select disabled name="bc_rb_category_values[loop]" readonly class="form-control">
-										<option value="True">True</option>
-									</select>
+                                        <h5><?php esc_html_e( 'Delay', 'random-banner' ); ?> [Pro Version only]</h5>
+                                        <select disabled name="bc_rb_category_values[delay]" readonly class="form-control">
+                                            <option value="3000">3000</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5><?php esc_html_e( 'Loop', 'random-banner' ); ?> [Pro Version only]</h5>
+                                        <select disabled name="bc_rb_category_values[loop]" readonly class="form-control">
+                                            <option value="True">True</option>
+                                        </select>
 
-									<h4><?php esc_html_e( 'Banner Location', 'random-banner' ); ?></h4>
-									<?php echo bc_rb_drop_down( 'bc_rb_category_values[location]', bc_rb_insert_post_locations(), $insert_short_code_values['location'] ); ?>
+                                        <h5><?php esc_html_e( 'Banner Location', 'random-banner' ); ?></h5>
+                                        <?php echo bc_rb_drop_down( 'bc_rb_category_values[location]', bc_rb_insert_post_locations(), $insert_short_code_values['location'] ); ?>
 
-									<h4><?php esc_html_e( 'Insert in', 'random-banner' ); ?></h4>
-									<?php echo bc_rb_drop_down( 'bc_rb_category_values[post_page]', bc_rb_insert_post_page(), $insert_short_code_values['post_page'] ); ?>
-								</div>
-							</div>
-							<div class="padding_top_10">
-								<button type="submit" name="bc_rb_category_values_save" class="btn btn-primary bc_rb_category_values_save">
-								<?php
-								esc_html_e( 'Save', 'random-banner' );
-								?>
-								</button>
-							</div>
-						</div>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="tab-pane p-20" id="Popup">
-				<form data-save="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_save_popup&nonce=' . wp_create_nonce( 'bc_rb_save_popup' ) ) ); ?>">
-				<div class="row padding_top_20">
-					<div class="col-md-3">
-						<?php esc_html_e( 'Enable Popup?', 'random-banner' ); ?>
-					</div>
-					<div class="col-md-4">
-						<input <?php echo esc_attr( $popup['enable_popup'] ); ?> type="checkbox"
-						name="bc_rb_setting_popup[enable_popup]"
-						value="checked" />
-					</div>
-				</div>
-				<div class="row padding_top_20">
-					<div class="col-md-3">
-						<?php esc_html_e( 'Category to show in Popup', 'random-banner' ); ?>
-					</div>
-					<div class="col-md-4">
-						<?php
-						echo bc_rb_drop_down(
-							'bc_rb_setting_popup[popup_category_name]',
-							bc_rb_get_category_by_array(),
-							$popup['popup_category_name']
-						)
-						?>
-					</div>
+                                        <h5><?php esc_html_e( 'Insert in', 'random-banner' ); ?></h5>
+                                        <?php echo bc_rb_drop_down( 'bc_rb_category_values[post_page]', bc_rb_insert_post_page(), $insert_short_code_values['post_page'] ); ?>
+                                    </div>
+                                </div>
+                                <div class="padding_top_10">
+                                    <button type="submit" name="bc_rb_category_values_save" class="btn btn-primary bc_rb_category_values_save">
+                                    <?php
+                                    esc_html_e( 'Save', 'random-banner' );
+                                    ?>
+                                    </button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane p-20 fade" id="Popup">
+                    <form data-save="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_save_popup&nonce=' . wp_create_nonce( 'bc_rb_save_popup' ) ) ); ?>">
+                    <div class="row padding_top_20">
+                        <div class="col-md-3">
+                            <?php esc_html_e( 'Enable Popup?', 'random-banner' ); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <input <?php echo esc_attr( $popup['enable_popup'] ); ?> type="checkbox"
+                            name="bc_rb_setting_popup[enable_popup]"
+                            value="checked" />
+                        </div>
+                    </div>
+                    <div class="row padding_top_20">
+                        <div class="col-md-3">
+                            <?php esc_html_e( 'Category to show in Popup', 'random-banner' ); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <?php
+                            echo bc_rb_drop_down(
+                                'bc_rb_setting_popup[popup_category_name]',
+                                bc_rb_get_category_by_array(),
+                                $popup['popup_category_name']
+                            )
+                            ?>
+                        </div>
 
-				</div>
-				<div class="margin_20 paypal_donation_button">
-					<div class="row padding_top_20">
-						<div class="col-md-3">
-							<?php esc_html_e( 'How many times Popup should show per Session?', 'random-banner' ); ?>
-						</div>
-						<div class="col-md-4">
-							<input readonly type="text" value="3" class="paypal_donation_button"/>
-						</div>
-					</div>
+                    </div>
+                    <div class="margin_20 paypal_donation_button">
+                        <div class="row padding_top_20">
+                            <div class="col-md-3">
+                                <?php esc_html_e( 'How many times Popup should show per Session?', 'random-banner' ); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <input readonly type="text" value="3" class="paypal_donation_button"/>
+                            </div>
+                        </div>
 
-					<div class="row padding_top_20">
-						<div class="col-md-3">
-							<?php esc_html_e( 'Popup should show after', 'random-banner' ); ?>
-						</div>
-						<div class="col-md-4">
-							<input type="text" readonly value="2000" class="paypal_donation_button"/>
-							(milliseconds)
-						</div>
-					</div>
+                        <div class="row padding_top_20">
+                            <div class="col-md-3">
+                                <?php esc_html_e( 'Popup should show after', 'random-banner' ); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" readonly value="2000" class="paypal_donation_button"/>
+                                (milliseconds)
+                            </div>
+                        </div>
 
-					<div class="row padding_top_20">
-						<div class="col-md-3">
-							<?php esc_html_e( 'Popup Loading Animated Style', 'random-banner' ); ?>
-						</div>
-						<div class="col-md-4">
-							<?php
-							echo bc_rb_drop_down(
-								'',
-								bc_rb_popup_animated_style(),
-								'',
-								'readonly',
-								'paypal_donation_button'
-							);
-							?>
-						</div>
-					</div>
+                        <div class="row padding_top_20">
+                            <div class="col-md-3">
+                                <?php esc_html_e( 'Popup Loading Animated Style', 'random-banner' ); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?php
+                                echo bc_rb_drop_down(
+                                    '',
+                                    bc_rb_popup_animated_style(),
+                                    '',
+                                    'readonly',
+                                    'paypal_donation_button'
+                                );
+                                ?>
+                            </div>
+                        </div>
 
-					<div class="row padding_top_20">
-						<div class="col-md-3">
-							<?php esc_html_e( 'Enable Popup Background Transparent', 'random-banner' ); ?>
-						</div>
-						<div class="col-md-4">
-							<input disabled checked type="checkbox" value=""/>
-						</div>
-					</div>
+                        <div class="row padding_top_20">
+                            <div class="col-md-3">
+                                <?php esc_html_e( 'Enable Popup Background Transparent', 'random-banner' ); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <input disabled checked type="checkbox" value=""/>
+                            </div>
+                        </div>
 
-					<div class="row padding_top_20">
-						<div class="col-md-3">
-							<?php esc_html_e( 'Popup Background Color', 'random-banner' ); ?>
-						</div>
-						<div class="col-md-4">
-							<input disabled type="color" value=""/>
-						</div>
-					</div>
+                        <div class="row padding_top_20">
+                            <div class="col-md-3">
+                                <?php esc_html_e( 'Popup Background Color', 'random-banner' ); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <input disabled type="color" value=""/>
+                            </div>
+                        </div>
 
-					<div class="row padding_top_20">
-						<div class="col-md-3">
-							<?php esc_html_e( 'Popup Border Color', 'random-banner' ); ?>
-						</div>
-						<div class="col-md-4">
-							<div class="bc_rb_inline">
-								<div>
-								<?php
-									echo bc_rb_drop_down(
-										'',
-										bc_rb_number_1_to_10(),
-										'',
-										'readonly',
-										'paypal_donation_button'
-									)
-								?>
-								</div>
-								<div>
-								<?php
-									echo bc_rb_drop_down(
-										'',
-										bc_rb_border_styles(),
-										'',
-										'readonly',
-										'paypal_donation_button'
-									);
-								?>
-								</div>
-								<div>
-									<input disabled type="color" value=""/>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="padding_top_10">
-					<button type="submit" name="bc_rb_popup_save" class="btn btn-primary bc_rb_popup_save"><?php esc_html_e( 'Save', 'random-banner' ); ?></button>
-				</div>
-				</form>
-			</div>
-			<div class="tab-pane p-20 paypal_donation_button" id="Statistics">
-				<div class="row">
-					<div>
-						<div class="row padding_top_20">
-							<div class="col-md-3">
-								<?php esc_html_e( 'Google Map API Key', 'random-banner' ); ?>
-							</div>
-							<div class="col-md-5">
-								<input type="text" value="" class="form-control" name=""/>
-							</div>
-							<div class="col-md-4">
-								<div class="btn btn-sm btn-info" data-toggle="popover" title="Help"
-									 data-content="Instruction to generate <a href=\'https://developers.google.com/maps/documentation/javascript/get-api-key\' target=\'_blank\'>API Key</a>">
-									<span class="glyphicon glyphicon-question-sign"></span>
-								</div>
-							</div>
-						</div>
-						<div class="row padding_top_20">
-							<div class="col-md-6">
-								<button type="submit" name="bc_rb_statistic_save" class="btn btn-primary bc_rb_statistic_save">
-									<?php esc_html_e( 'Save', 'random-banner' ); ?>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row padding_top_200">
-					<div class="bg-danger p-20">
-						<div class="row padding_top_20">
-							<div class="col-md-3">
-								<?php esc_html_e( 'Total Number of row in Statistics', 'random-banner' ); ?>
-							</div>
-							<div class="col-md-6" id="bc_stats_count_display">
-								Pro Version
-							</div>
-						</div>
+                        <div class="row padding_top_20">
+                            <div class="col-md-3">
+                                <?php esc_html_e( 'Popup Border Color', 'random-banner' ); ?>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="bc_rb_inline">
+                                    <div>
+                                    <?php
+                                        echo bc_rb_drop_down(
+                                            '',
+                                            bc_rb_number_1_to_10(),
+                                            '',
+                                            'readonly',
+                                            'paypal_donation_button'
+                                        )
+                                    ?>
+                                    </div>
+                                    <div>
+                                    <?php
+                                        echo bc_rb_drop_down(
+                                            '',
+                                            bc_rb_border_styles(),
+                                            '',
+                                            'readonly',
+                                            'paypal_donation_button'
+                                        );
+                                    ?>
+                                    </div>
+                                    <div>
+                                        <input disabled type="color" value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding_top_10">
+                        <button type="submit" name="bc_rb_popup_save" class="btn btn-primary bc_rb_popup_save"><?php esc_html_e( 'Save', 'random-banner' ); ?></button>
+                    </div>
+                    </form>
+                </div>
+                <div class="tab-pane p-20 fade paypal_donation_button" id="Statistics">
+                    <div class="row">
+                        <div>
+                            <div class="row padding_top_20">
+                                <div class="col-md-3">
+                                    <?php esc_html_e( 'Google Map API Key', 'random-banner' ); ?>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" value="" class="form-control" name=""/>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="btn btn-sm btn-info" data-toggle="popover" title="Help"
+                                         data-content="Instruction to generate <a href=\'https://developers.google.com/maps/documentation/javascript/get-api-key\' target=\'_blank\'>API Key</a>">
+                                        <span class="glyphicon glyphicon-question-sign"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row padding_top_20">
+                                <div class="col-md-6">
+                                    <button type="submit" name="bc_rb_statistic_save" class="btn btn-primary bc_rb_statistic_save">
+                                        <?php esc_html_e( 'Save', 'random-banner' ); ?>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding_top_200">
+                        <div class="bg-danger p-20">
+                            <div class="row padding_top_20">
+                                <div class="col-md-3">
+                                    <?php esc_html_e( 'Total Number of row in Statistics', 'random-banner' ); ?>
+                                </div>
+                                <div class="col-md-6" id="bc_stats_count_display">
+                                    Pro Version
+                                </div>
+                            </div>
 
-						<div class="row padding_top_20">
-							<div class="col-md-3">
-								<?php esc_html_e( 'Delete last __ records from statistics', 'random-banner' ); ?>
-							</div>
-							<div class="col-md-4">
-								<?php
-								echo bc_rb_drop_down(
-									'bc_rb_setting_statistics_delete',
-									array(
-										'null' => 'Please Select the number of row to delete',
-										'10'   => '10',
-										'100'  => '100',
-										'200'  => '200',
-										'300'  => '300',
-										'400'  => '400',
-										'500'  => '500',
-										'1000' => '1000',
-									)
-								);
-								?>
-							</div>
-						</div>
+                            <div class="row padding_top_20">
+                                <div class="col-md-3">
+                                    <?php esc_html_e( 'Delete last __ records from statistics', 'random-banner' ); ?>
+                                </div>
+                                <div class="col-md-4">
+                                    <?php
+                                    echo bc_rb_drop_down(
+                                        'bc_rb_setting_statistics_delete',
+                                        array(
+                                            'null' => 'Please Select the number of row to delete',
+                                            '10'   => '10',
+                                            '100'  => '100',
+                                            '200'  => '200',
+                                            '300'  => '300',
+                                            '400'  => '400',
+                                            '500'  => '500',
+                                            '1000' => '1000',
+                                        )
+                                    );
+                                    ?>
+                                </div>
+                            </div>
 
-						<div class="row padding_top_20">
-							<div class="col-md-6">
-								<button type="submit" name="bc_rb_option" class="btn btn-danger bc_rb_statistic_delete">
-									<?php esc_html_e( 'Delete Records', 'random-banner' ); ?>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="tab-pane" id="FloatingAds">
-						<div class="p-20">
-							<div>
-								<div class="row">
-									<div class="col-md-12 padding_bottom_20">
-									<a target="_blank" href="https://www.randombanners.com" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-eye-open"></span> Demo</a>
-									</div>
-								</div>
-								<div class="row  paypal_donation_button">
-									<div class="col-md-6">
-										<div class="bc_floating_container">
-											<h4>Top Floating Ads</h4>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="top_ads_enable">Enable Top Floating Ads?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[top][enable]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="top_ads_enable">Disable in Mobile?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[top][mobile_disable]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="top_ads_enable">Hide by Default?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[top][hide]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="top_ads_category">Category</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[top][category_name]', bc_rb_get_category_by_array() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="top_ads_show_text">Show Text</label>
-														<input type="text" class="form-control" name="bc_rb_floating[top][show_text]" value="" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="top_ads_hide_text">Hide Text</label>
-														<input type="text" class="form-control" name="bc_rb_floating[top][hide_text]" value="" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="top_ads_category">Is Fixed</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[top][is_fixed]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="top_ads_category">Padding Top</label>
-														<div class="input-group">
-															<input type="text" class="form-control" placeholder="10" name="bc_rb_floating[top][padding]" value="">
-															<span class="input-group-addon">px</span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="bc_floating_container">
-											<h4>Right Floating Ads</h4>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="right_ads_enable">Enable Right Floating Ads?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[right][enable]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="right_ads_enable">Disable in Mobile?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[right][mobile_disable]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="right_ads_enable">Hide by Default?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[right][hide]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="right_ads_category">Category</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[right][category_name]', bc_rb_get_category_by_array() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="right_ads_show_text">Show Text</label>
-														<input type="text" class="form-control" name="bc_rb_floating[right][show_text]" value="" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="right_ads_hide_text">Hide Text</label>
-														<input type="text" class="form-control" name="bc_rb_floating[right][hide_text]" value="" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="top_ads_category">Is Fixed</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[right][is_fixed]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="right_ads_category">Padding Right</label>
-														<div class="input-group">
-															<input type="text" class="form-control" placeholder="10" value="" name="bc_rb_floating[right][padding]">
-															<span class="input-group-addon">px</span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="bc_floating_container ">
-											<h4>Bottom Floating Ads</h4>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="bottom_ads_enable">Enable Bottom Floating Ads?
-														</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[bottom][enable]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="bottom_ads_enable">Disable in Mobile?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[bottom][mobile_disable]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="bottom_ads_enable">Hide by Default?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[bottom][hide]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="bottom_ads_category">Category</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[bottom][category_name]', bc_rb_get_category_by_array() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="bottom_ads_show_text">Show Text</label>
-														<input type="text" class="form-control" name="bc_rb_floating[bottom][show_text]" value="" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="bottom_ads_hide_text">Hide Text</label>
-														<input type="text" class="form-control" name="bc_rb_floating[bottom][hide_text]" value="" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="bottom_ads_category">Padding Bottom</label>
-														<div class="input-group">
-															<input type="text" class="form-control" placeholder="10" value="" name="bc_rb_floating[bottom][padding]">
-															<span class="input-group-addon">px</span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="bc_floating_container">
-											<h4>Left Floating Ads</h4>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="left_ads_enable">Enable Left Floating Ads?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[left][enable]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="left_ads_enable">Disable in Mobile?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[left][mobile_disable]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="left_ads_enable">Hide by Default?</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[left][hide]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="left_ads_category">Category</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[left][category_name]', bc_rb_get_category_by_array() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="left_ads_show_text">Show Text</label>
-														<input type="text" class="form-control" name="bc_rb_floating[left][show_text]" value="" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="left_ads_hide_text">Hide Text</label>
-														<input type="text" class="form-control" name="bc_rb_floating[left][hide_text]" value="" />
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="left_ads_category">Is Fixed</label>
-													<?php echo bc_rb_drop_down( 'bc_rb_floating[left][is_fixed]', bc_rb_get_yes_or_no_values() ); ?>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="left_ads_category">Padding Left</label>
-														<div class="input-group">
-															<input type="text" class="form-control" placeholder="10" value="" name="bc_rb_floating[left][padding]">
-															<span class="input-group-addon">px</span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12 padding_bottom_20">
-									<a target="_blank" href="https://www.randombanners.com" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-eye-open"></span> Demo</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-			<div class="tab-pane p-20" id="Others">
-				<form data-save="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_save_options&nonce=' . wp_create_nonce( 'bc_rb_save_options' ) ) ); ?>">
-				<div class="row padding_top_20">
-					<div class="col-md-6">
-						<?php esc_html_e( 'Open Ads Link in New Window', 'random-banner' ); ?>
-					</div>
-					<div class="col-md-4">
-						<input <?php echo esc_attr( $options['open'] ); ?> type="checkbox" name="bc_rb_setting_options[open]"
-						value="checked" />
-					</div>
-				</div>
-				<div class="row padding_top_20">
-					<div class="col-md-6">
-						<?php esc_html_e( 'Currency Type', 'random-banner' ); ?> [Pro Version]
-					</div>
-					<div class="col-md-3">
-						<?php echo bc_rb_drop_down_currency( 'bc_rb_setting_options[currency_type]', bc_rb_currency_lists() ); ?>
-					</div>
-				</div>
+                            <div class="row padding_top_20">
+                                <div class="col-md-6">
+                                    <button type="submit" name="bc_rb_option" class="btn btn-danger bc_rb_statistic_delete">
+                                        <?php esc_html_e( 'Delete Records', 'random-banner' ); ?>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="FloatingAds">
+                            <div class="p-20">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-12 padding_bottom_20">
+                                        <a target="_blank" href="https://www.randombanners.com" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-eye-open"></span> Demo</a>
+                                        </div>
+                                    </div>
+                                    <div class="row  paypal_donation_button">
+                                        <div class="col-md-6">
+                                            <div class="bc_floating_container">
+                                                <h4>Top Floating Ads</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="top_ads_enable">Enable Top Floating Ads?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[top][enable]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="top_ads_enable">Disable in Mobile?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[top][mobile_disable]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="top_ads_enable">Hide by Default?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[top][hide]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="top_ads_category">Category</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[top][category_name]', bc_rb_get_category_by_array() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="top_ads_show_text">Show Text</label>
+                                                            <input type="text" class="form-control" name="bc_rb_floating[top][show_text]" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="top_ads_hide_text">Hide Text</label>
+                                                            <input type="text" class="form-control" name="bc_rb_floating[top][hide_text]" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="top_ads_category">Is Fixed</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[top][is_fixed]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="top_ads_category">Padding Top</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="10" name="bc_rb_floating[top][padding]" value="">
+                                                                <span class="input-group-addon">px</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="bc_floating_container">
+                                                <h4>Right Floating Ads</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="right_ads_enable">Enable Right Floating Ads?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[right][enable]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="right_ads_enable">Disable in Mobile?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[right][mobile_disable]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="right_ads_enable">Hide by Default?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[right][hide]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="right_ads_category">Category</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[right][category_name]', bc_rb_get_category_by_array() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="right_ads_show_text">Show Text</label>
+                                                            <input type="text" class="form-control" name="bc_rb_floating[right][show_text]" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="right_ads_hide_text">Hide Text</label>
+                                                            <input type="text" class="form-control" name="bc_rb_floating[right][hide_text]" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="top_ads_category">Is Fixed</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[right][is_fixed]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="right_ads_category">Padding Right</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="10" value="" name="bc_rb_floating[right][padding]">
+                                                                <span class="input-group-addon">px</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="bc_floating_container ">
+                                                <h4>Bottom Floating Ads</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="bottom_ads_enable">Enable Bottom Floating Ads?
+                                                            </label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[bottom][enable]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="bottom_ads_enable">Disable in Mobile?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[bottom][mobile_disable]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="bottom_ads_enable">Hide by Default?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[bottom][hide]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="bottom_ads_category">Category</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[bottom][category_name]', bc_rb_get_category_by_array() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="bottom_ads_show_text">Show Text</label>
+                                                            <input type="text" class="form-control" name="bc_rb_floating[bottom][show_text]" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="bottom_ads_hide_text">Hide Text</label>
+                                                            <input type="text" class="form-control" name="bc_rb_floating[bottom][hide_text]" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="bottom_ads_category">Padding Bottom</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="10" value="" name="bc_rb_floating[bottom][padding]">
+                                                                <span class="input-group-addon">px</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="bc_floating_container">
+                                                <h4>Left Floating Ads</h4>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="left_ads_enable">Enable Left Floating Ads?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[left][enable]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="left_ads_enable">Disable in Mobile?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[left][mobile_disable]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="left_ads_enable">Hide by Default?</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[left][hide]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="left_ads_category">Category</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[left][category_name]', bc_rb_get_category_by_array() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="left_ads_show_text">Show Text</label>
+                                                            <input type="text" class="form-control" name="bc_rb_floating[left][show_text]" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="left_ads_hide_text">Hide Text</label>
+                                                            <input type="text" class="form-control" name="bc_rb_floating[left][hide_text]" value="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="left_ads_category">Is Fixed</label>
+                                                        <?php echo bc_rb_drop_down( 'bc_rb_floating[left][is_fixed]', bc_rb_get_yes_or_no_values() ); ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="left_ads_category">Padding Left</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="10" value="" name="bc_rb_floating[left][padding]">
+                                                                <span class="input-group-addon">px</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 padding_bottom_20">
+                                        <a target="_blank" href="https://www.randombanners.com" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-eye-open"></span> Demo</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                <div class="tab-pane  fade p-20" id="Others">
+                    <form data-save="<?php echo esc_url( admin_url( 'admin-ajax.php?action=bc_rb_save_options&nonce=' . wp_create_nonce( 'bc_rb_save_options' ) ) ); ?>">
+                    <div class="row padding_top_20">
+                        <div class="col-md-6">
+                            <?php esc_html_e( 'Open Ads Link in New Window', 'random-banner' ); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <input <?php echo esc_attr( $options['open'] ); ?> type="checkbox" name="bc_rb_setting_options[open]"
+                            value="checked" />
+                        </div>
+                    </div>
+                    <div class="row padding_top_20">
+                        <div class="col-md-6">
+                            <?php esc_html_e( 'Currency Type', 'random-banner' ); ?> [Pro Version]
+                        </div>
+                        <div class="col-md-3">
+                            <?php echo bc_rb_drop_down_currency( 'bc_rb_setting_options[currency_type]', bc_rb_currency_lists() ); ?>
+                        </div>
+                    </div>
 
-				<div class="row padding_top_20">
-					<div class="col-md-6">
-						<?php esc_html_e( 'Disable Banners to Logged in Users?', 'random-banner' ); ?>
-					</div>
-					<div class="col-md-4">
-						<input <?php echo esc_attr( $options['user_logged_in'] ); ?> type="checkbox" name="bc_rb_setting_options[user_logged_in]"
-						value="checked" />
-					</div>
-				</div>
+                    <div class="row padding_top_20">
+                        <div class="col-md-6">
+                            <?php esc_html_e( 'Disable Banners to Logged in Users?', 'random-banner' ); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <input <?php echo esc_attr( $options['user_logged_in'] ); ?> type="checkbox" name="bc_rb_setting_options[user_logged_in]"
+                            value="checked" />
+                        </div>
+                    </div>
 
-				<div class="row padding_top_20">
-					<div class="col-md-6">
-						<span class="danger_fonts"><?php esc_html_e( 'Disable Random Banner for Mobile and Tablets?', 'random-banner' ); ?> [Pro Version]</span>
-						<br>
-						<i>
-						<?php
-						esc_html_e(
-							'Note: if checked the Random Banner will be disabled in all the location
-                            including shortcodes',
-							'random-banner'
-						)
-						?>
-							</i>
-					</div>
-					<div class="col-md-6">
-						<input type="checkbox" disabled/>
-					</div>
-				</div>
+                    <div class="row padding_top_20">
+                        <div class="col-md-6">
+                            <span class="danger_fonts"><?php esc_html_e( 'Disable Random Banner for Mobile and Tablets?', 'random-banner' ); ?> [Pro Version]</span>
+                            <br>
+                            <i>
+                            <?php
+                            esc_html_e(
+                                'Note: if checked the Random Banner will be disabled in all the location
+                                including shortcodes',
+                                'random-banner'
+                            )
+                            ?>
+                                </i>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" disabled/>
+                        </div>
+                    </div>
 
-				<div class="row padding_top_20">
-					<div class="col-md-6">
-						<span class="danger_fonts">
-						<?php
-						esc_html_e( 'Disable Random Banner in all location in that page when Post/Page banner disabled [Pro Version]', 'random-banner' );
-						?>
-						</span>
-					</div>
-					<div class="col-md-6">
-						<input type="checkbox" disabled value="checked"/>
-					</div>
-				</div>
+                    <div class="row padding_top_20">
+                        <div class="col-md-6">
+                            <span class="danger_fonts">
+                            <?php
+                            esc_html_e( 'Disable Random Banner in all location in that page when Post/Page banner disabled [Pro Version]', 'random-banner' );
+                            ?>
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="checkbox" disabled value="checked"/>
+                        </div>
+                    </div>
 
 
-				<div class="row padding_top_20">
-					<div class="col-md-6">
-						<span class="danger_fonts"><?php esc_html_e( 'Disable Random Banner in all locations', 'random-banner' ); ?></span>
-						<br>
-						<i>
-						<?php
-						esc_html_e(
-							'Note: if checked the Random Banner will be disabled in all the location
-                            including shortcodes',
-							'random-banner'
-						)
-						?>
-							</i>
-					</div>
-					<div class="col-md-6">
-						<input <?php echo esc_attr( $options['disable'] ); ?> type="checkbox" name="bc_rb_setting_options[disable]"
-						value="checked" />
-					</div>
-				</div>
+                    <div class="row padding_top_20">
+                        <div class="col-md-6">
+                            <span class="danger_fonts"><?php esc_html_e( 'Disable Random Banner in all locations', 'random-banner' ); ?></span>
+                            <br>
+                            <i>
+                            <?php
+                            esc_html_e(
+                                'Note: if checked the Random Banner will be disabled in all the location
+                                including shortcodes',
+                                'random-banner'
+                            )
+                            ?>
+                                </i>
+                        </div>
+                        <div class="col-md-6">
+                            <input <?php echo esc_attr( $options['disable'] ); ?> type="checkbox" name="bc_rb_setting_options[disable]"
+                            value="checked" />
+                        </div>
+                    </div>
 
-				<div class="row padding_top_20">
-					<div class="col-md-6">
-						<?php esc_html_e( 'Text for empty banner', 'random-banner' ); ?>
-						<br>
-						<i>
-						<?php
-						esc_html_e(
-							'Note: This text will be shown if there is no ads to display in that
-                            category',
-							'random-banner'
-						)
-						?>
-							</i>
-					</div>
-					<div class="col-md-6">
-						<input class="form-control" type="text" name="bc_rb_setting_options[empty_banner]"
-						value="<?php echo esc_attr( $options['empty_banner'] ); ?>"/>
-					</div>
-				</div>
+                    <div class="row padding_top_20">
+                        <div class="col-md-6">
+                            <?php esc_html_e( 'Text for empty banner', 'random-banner' ); ?>
+                            <br>
+                            <i>
+                            <?php
+                            esc_html_e(
+                                'Note: This text will be shown if there is no ads to display in that
+                                category',
+                                'random-banner'
+                            )
+                            ?>
+                                </i>
+                        </div>
+                        <div class="col-md-6">
+                            <input class="form-control" type="text" name="bc_rb_setting_options[empty_banner]"
+                            value="<?php echo esc_attr( $options['empty_banner'] ); ?>"/>
+                        </div>
+                    </div>
 
-				<div class="row padding_top_20">
-					<div class="col-md-6">
-						<button type="submit" name="bc_rb_option_save" class="btn btn-primary bc_rb_option_save">
-							<?php esc_html_e( 'Save', 'random-banner' ); ?>
-						</button>
-					</div>
-				</div>
-				</form>
-			</div>
+                    <div class="row padding_top_20">
+                        <div class="col-md-6">
+                            <button type="submit" name="bc_rb_option_save" class="btn btn-primary bc_rb_option_save">
+                                <?php esc_html_e( 'Save', 'random-banner' ); ?>
+                            </button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -838,7 +841,7 @@ function bc_random_banner_campaign() {
         <div class="row">
             <div class="col-md-12">
                 <h1> ' . esc_html__( 'Campaign', 'random-banner' ) . '
-                    <span class="pull-right bc_random_banner" data-display_name="' . esc_attr( bc_rb_get_user_display_name() ) . '">' . wp_kses_post( bc_rb_show_payment_details() ) . '</span>
+                    <span class="float-end bc_random_banner" data-display_name="' . esc_attr( bc_rb_get_user_display_name() ) . '">' . wp_kses_post( bc_rb_show_payment_details() ) . '</span>
                 </h1>
             </div>
             <i>
@@ -959,7 +962,6 @@ function bc_rb_disable_random_banner( $post ) {
  * Show Popup Based on Setting Value
  */
 function bc_rb_show_popup() {
-	bc_rb_session_start();
 	$popup = get_popup_option_value();
 	if ( ! isset( $_SESSION['popup_show'] ) ) {
 		$_SESSION['popup_show'] = 0;

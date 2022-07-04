@@ -215,9 +215,7 @@ function search_for_category_exist( $table, $post ) {
 function bc_rb_get_all_category() {
 	global $wpdb;
 	$table   = $wpdb->prefix . BC_RB_RANDOM_BANNER_CATEGORY;
-	$all_row = $wpdb->get_results( "SELECT * FROM $table ORDER BY id DESC" );
-
-	return $all_row;
+	return  $wpdb->get_results( "SELECT * FROM $table ORDER BY id DESC" );
 }
 
 /**
@@ -293,9 +291,7 @@ function bc_rb_update_random_banner_category_by_update( $new_category, $old_cate
 function bc_rb_get_category_by_id( $id ) {
 	global $wpdb;
 	$cat_table    = $wpdb->prefix . BC_RB_RANDOM_BANNER_CATEGORY;
-	$old_category = $wpdb->get_var( $wpdb->prepare( "SELECT category FROM $cat_table WHERE id = %d", (int) $id ) );
-
-	return $old_category;
+	return  $wpdb->get_var( $wpdb->prepare( "SELECT category FROM $cat_table WHERE id = %d", (int) $id ) );
 }
 
 /**
@@ -308,9 +304,7 @@ function bc_rb_get_category_by_id( $id ) {
 function bc_rb_get_all_banners( $category ) {
 	global $wpdb;
 	$table   = $wpdb->prefix . BC_RB_RANDOM_BANNER_DB;
-	$all_row = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table WHERE category LIKE '%s' ORDER BY RAND()", bc_rb_sanitize_text_field( $category ) ) );
-
-	return $all_row;
+	return  $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table WHERE category LIKE '%s' ORDER BY RAND()", bc_rb_sanitize_text_field( $category ) ) );
 }
 
 /**

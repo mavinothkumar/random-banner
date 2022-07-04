@@ -564,3 +564,13 @@ html {
 .bc_donation_container h3 {
 	margin: 0 !important;
 }
+
+.hide {
+	display: none !important;
+}
+.show {
+	display: block !important;
+}
+#my-tab-content {
+	background: #f7f7f7;
+}

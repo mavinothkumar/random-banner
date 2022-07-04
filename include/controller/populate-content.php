@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Fetch value from Database and output the data to view
  *
  * @param String $db_status Status Check.
- * @param String $message Message.
+ * @param String $message   Message.
  */
 function populate_data( $db_status, $message ) {
 	if ( 'success' === $db_status ) {
@@ -52,101 +52,111 @@ function loop_data( $rows ) {
 
 	foreach ( $rows as $row ) {
 		if ( 'upload' === $row->banner_type ) {
-			$content .= '<div class="row single_upload ' . sanitize_title( $row->category ) . '">
-<form>
-<input type="hidden" name="banner_type" value="' . esc_attr( $row->banner_type ) . '" />
-<input type="hidden" name="banner_id" class="form-control banner_id" value="' . (int) $row->id . '"/>
-  <div class="col-md-3">
-    <div class="col-md-12 padding_bottom_20 bc_flex_center">
-      <div class="no_image" readonly>
-        <img width=120 height=120 src=" ' . esc_url( $row->file_url ) . ' ">
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="col-md-6">
-      <button class="btn btn-primary form-control bc_rb_button_edit"> <span class="glyphicon glyphicon-edit"></span>
-       ' . esc_html__( 'Edit', 'random-banner' ) . '</button>
-      </div>
-      <div class="col-md-6">
-      <button class="btn btn-danger form-control bc_rb_button_delete_by_id"> <span 
-      class="glyphicon glyphicon-trash"></span> ' . esc_html__( 'Delete', 'random-banner' ) . '</button>
-     
-      </div>
-	</div>
-    </div>
-    <div class="col-md-9 bc_small_font">
-    <div class="col-md-6">
-    <label>' . __( 'Upload URL', 'random-banner' ) . '</label>
-      <input readonly type="text" name="file_url_link" class="form-control file_url_link" placeholder="Upload Image" value="' . esc_url( $row->file_url ) . '"/>
-     </div>
-     <div class="col-md-6">
-     <label>' . __( 'Description', 'random-banner' ) . '</label>
-      <input readonly type="text" name="file_description" class="form-control file_description" placeholder="File Description" value="' . esc_attr( $row->file_description ) . '"/>
-      </div>
-      <div class="col-md-12 padding_top_10">
-      <label>' . __( 'External URL', 'random-banner' ) . '</label>
-      <input readonly type="text" name="external_link" class="bc_rb_external_link form-control" placeholder="External Link" value="' . esc_url( $row->external_link ) . '" />
-      </div>
-      <div class="col-md-3 padding_top_10">
-      <label>' . __( 'Width', 'random-banner' ) . '</label>
-      <div class="input-group">
-      <input readonly name="width" type="number" class="form-control width" placeholder="Width in px" value="' . (int) $row->width . '" />
-      <span class="input-group-addon" >px</span>
-      </div>
-      </div>
-      <div class="col-md-3 padding_top_10">
-      <label>' . __( 'Height', 'random-banner' ) . '</label>
-      <div class="input-group">
-      <input readonly name="height" type="number" class="form-control height" placeholder="Height in px" value="' . (int) $row->height . '" />
-      <span class="input-group-addon" >px</span>
-      </div>
-      </div>
-      <div class="col-md-3 padding_top_10">
-      <label>  ' . __( 'Theme Based Size', 'random-banner' ) . ' </label>
-      <div class="text-center">
-      <input disabled="disabled" ' . esc_attr( $row->automatic ) . ' class="automatic form-control" type="checkbox" name="automatic" value="checked" />
-       </div>
-      </div>
-      <div class="col-md-3 padding_top_10">
-      <label>' . __( 'Category', 'random-banner' ) . '</label>
-      <div class="input-group">
-      <div class="dropdown">
-      ' . bc_rb_drop_down( 'category', bc_rb_get_category_by_array(), $row->category, 'disabled', 'category' ) . '
-      </div>
-      </div>
-      </div>
-      </div>
-      </form>
-      </div>';
+			$content .= '
+			<div class="row single_upload ' . sanitize_title( $row->category ) . '">
+				<form>
+					<input type="hidden" name="banner_type" value="' . esc_attr( $row->banner_type ) . '" />
+					<input type="hidden" name="banner_id" class="form-control banner_id" value="' . (int) $row->id . '"/>
+						<div class="row">
+							<div class="col-md-3">
+							    <div class="col-md-12 padding_bottom_20 bc_flex_center">
+							      <div class="no_image" readonly>
+							        <img width=120 height=120 src=" ' . esc_url( $row->file_url ) . ' ">
+							      </div>
+							    </div>
+					    	<div class="col-md-12">
+					    		<div class="row">
+									<div class="col-md-6">
+									<button class="btn btn-primary form-control bc_rb_button_edit"><span class="glyphicon glyphicon-edit"></span>' . esc_html__( 'Edit',
+			                                                                                                                                                     'random-banner' ) . '</button>
+									</div>
+									<div class="col-md-6">
+										<button class="btn btn-danger form-control bc_rb_button_delete_by_id"> <span class="glyphicon glyphicon-trash"></span> ' . esc_html__( 'Delete',
+			                                                                                                                                                                   'random-banner' ) . '</button>
+									</div>
+								</div>
+							</div>
+					    </div>
+					    <div class="col-md-9 bc_small_font">
+						    <div class="row">
+							    <div class="col-md-6">
+								    <label>' . __( 'Upload URL', 'random-banner' ) . '</label>
+								      <input readonly type="text" name="file_url_link" class="form-control file_url_link" placeholder="Upload Image" value="' . esc_url( $row->file_url ) . '"/>
+							     </div>
+								<div class="col-md-6">
+								     <label>' . __( 'Description', 'random-banner' ) . '</label>
+								      <input readonly type="text" name="file_description" class="form-control file_description" placeholder="File Description" value="' . esc_attr( $row->file_description ) . '"/>
+							      </div>
+								<div class="col-md-12 padding_top_10">
+									<label>' . __( 'External URL', 'random-banner' ) . '</label>
+									<input readonly type="text" name="external_link" class="bc_rb_external_link form-control" placeholder="External Link" value="' . esc_url( $row->external_link ) . '" />
+								</div>
+								<div class="col-md-3 padding_top_10">
+									<label>' . __( 'Width', 'random-banner' ) . '</label>
+									<div class="input-group">
+										<input readonly name="width" type="number" class="form-control width" placeholder="Width in px" value="' . (int) $row->width . '" />
+										<span class="input-group-text" >px</span>
+									</div>
+								</div>
+								<div class="col-md-3 padding_top_10">
+									<label>' . __( 'Height', 'random-banner' ) . '</label>
+										<div class="input-group">
+											<input readonly name="height" type="number" class="form-control height" placeholder="Height in px" value="' . (int) $row->height . '" />
+											<span class="input-group-text" >px</span>
+										</div>
+								</div>
+								<div class="col-md-3 padding_top_10">
+									<label>  ' . __( 'Theme Based Size', 'random-banner' ) . ' </label>
+										<div class="text-center">
+										<input disabled="disabled" ' . esc_attr( $row->automatic ) . ' class="automatic form-control" type="checkbox" name="automatic" value="checked" />
+									</div>
+								</div>
+								<div class="col-md-3 padding_top_10">
+									<label>' . __( 'Category', 'random-banner' ) . '</label>
+										<div class="input-group">
+											<div class="dropdown">' . bc_rb_drop_down( 'category', bc_rb_get_category_by_array(), $row->category, 'disabled', 'category' ) . '
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>';
 		}
 		if ( 'script' === $row->banner_type ) {
-			$content .= '<div class="row single_upload ' . esc_attr( $row->category ) . '">
-<form>
-<input type="hidden" name="banner_type" value="' . esc_attr( $row->banner_type ) . '" />
-<input type="hidden" name="banner_id" class="form-control banner_id" value="' . $row->id . '"/>
-<div class="col-md-6"> <input readonly type="text" value="' . esc_attr( $row->file_description ) . '" name="file_description" class="form-control file_description"
- placeholder="Title"/> </div>
-<div class="col-md-2" >
-      <div class="input-group">
-      <div class="dropdown">
-      ' . bc_rb_drop_down( 'category', bc_rb_get_category_by_array(), $row->category, 'disabled', 'category' ) . '
-      </div>
-      </div>
-      </div>
-<div class="col-md-9 padding_top_10">
-<textarea readonly name="file_url_link" class="file_url_link_textarea form-control" rows="5" placeholder="Please paste the code here">' . esc_js( $row->file_url ) . '</textarea>
-</div>
-
-<div class="col-md-3 padding_top_10">
-      <div class="col-md-12">
-      <button class="btn btn-primary bc_rb_button_edit"> ' . esc_html__( 'Edit', 'random-banner' ) . '</button>
-      </div>
-      <div class="col-md-12 padding_top_20">
-      <button class="btn btn-danger bc_rb_button_delete_by_id"> ' . esc_html__( 'Delete', 'random-banner' ) . '</button>
-      </div>
-      </div>
-</form>
-</div>';
+			$content .= '
+					<div class="row single_upload ' . esc_attr( $row->category ) . '">
+						<form>
+						<input type="hidden" name="banner_type" value="' . esc_attr( $row->banner_type ) . '" />
+						<input type="hidden" name="banner_id" class="form-control banner_id" value="' . $row->id . '"/>
+							<div class="row">
+								<div class="col-md-6"> <input readonly type="text" value="' . esc_attr( $row->file_description ) . '" name="file_description" class="form-control file_description"
+									placeholder="Title"/>
+								</div>
+								<div class="col-md-2" >
+									<div class="input-group">
+									<div class="dropdown">
+									' . bc_rb_drop_down( 'category', bc_rb_get_category_by_array(), $row->category, 'disabled', 'category' ) . '
+									</div>
+									</div>
+								</div>
+								<div class="col-md-9 padding_top_10">
+									<textarea readonly name="file_url_link" class="file_url_link_textarea form-control" rows="5" placeholder="Please paste the code here">' . esc_js( $row->file_url ) . '</textarea>
+								</div>
+								<div class="col-md-3 padding_top_10">
+									<div class="row">
+										<div class="col-md-12">
+											<button class="btn btn-primary bc_rb_button_edit"> ' . esc_html__( 'Edit', 'random-banner' ) . '</button>
+											</div>
+										<div class="col-md-12 padding_top_20">
+											<button class="btn btn-danger bc_rb_button_delete_by_id"> ' . esc_html__( 'Delete', 'random-banner' ) . '</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>';
 		}
 	}
 
@@ -331,7 +341,7 @@ function bc_rb_get_slider_delay( $selected = '' ) {
  * Loop the drop-down
  *
  * @param String $selected Selected.
- * @param array  $values array of Values.
+ * @param array  $values   array of Values.
  *
  * @return string
  */
@@ -356,8 +366,6 @@ function bc_rb_loop_drop_down( $selected, $values ) {
  * @return string | array
  */
 function bc_rb_get_unique_banner_from_session( $category ) {
-	bc_rb_session_start();
-
 	if ( ! isset( $_SESSION['bc_rb_category_session'] ) || ! is_array( $_SESSION['bc_rb_category_session'] ) ) {
 		$_SESSION['bc_rb_category_session'] = array();
 	}
@@ -367,11 +375,11 @@ function bc_rb_get_unique_banner_from_session( $category ) {
 		if ( count( $_SESSION['bc_rb_category_session'] ) >= count( $get_all_banner ) ) {
 			$_SESSION['bc_rb_category_session'] = array();
 		}
+
 		return bc_rb_check_value_in_session( $get_all_banner );
 	}
 
 	return '';
-
 }
 
 /**
@@ -382,7 +390,6 @@ function bc_rb_get_unique_banner_from_session( $category ) {
  * @return array
  */
 function bc_rb_check_value_in_session( $get_all_banner ) {
-
 	if ( empty( $_SESSION['bc_rb_category_session'] ) ) {
 		array_push( $_SESSION['bc_rb_category_session'], (int) $get_all_banner[0]->id );
 
@@ -408,27 +415,29 @@ function bc_rb_loop_campaign_data( $data ) {
 	$content = '';
 	foreach ( $data as $banner ) {
 		$ads_type_click = $ads_type_impression = '';
-		$content       .= '<div class="row campaign_data bc_random_banner" data-display_name="' . esc_attr( bc_rb_get_user_display_name() ) . '">
-<form>
-<input type="hidden" name="banner_id" value="' . (int) $banner->id . '" />
-<div class="col-md-2">
-  <div class="banner_image">';
+		$content        .= '
+		<div class="row campaign_data bc_random_banner" data-display_name="' . esc_attr( bc_rb_get_user_display_name() ) . '">
+		<form>
+		<input type="hidden" name="banner_id" value="' . (int) $banner->id . '" />
+		<div class="row">
+		<div class="col-md-2">
+		  <div class="banner_image">';
 
 		if ( 'upload' === $banner->banner_type ) {
-			$content .= '<img width=100 height=80 src=" ' . esc_url( $banner->file_url ) . ' ">';
+			$content .= '<img alt="upload image" width=100 height=80 src=" ' . esc_url( $banner->file_url ) . ' ">';
 		}
 		if ( 'script' === $banner->banner_type ) {
-			$content .= '<img width=100 height=80 src=" ' . esc_url( plugins_url( '/assets/images/script.png', BC_RB_PLUGIN ) ) . ' ">';
+			$content .= '<img alt="upload image"  width=100 height=80 src=" ' . esc_url( plugins_url( '/assets/images/script.png', BC_RB_PLUGIN ) ) . ' ">';
 		}
 		$content .= '</div>
-</div>
-
-<div class="col-md-8">
-  <div class="row">
-    <div class="col-md-6">
-      <input required readonly type="text" name="slot_name" class="form-control slot_name" placeholder="Slot Name [eg., Top sidebar, left 2nd sidebar]" value="' . esc_attr( $banner->slot_name ) . '"/>
-    </div>
-    <div class="col-md-6">';
+		</div>
+		
+		<div class="col-md-8">
+		  <div class="row">
+		    <div class="col-md-6">
+		      <input required readonly type="text" name="slot_name" class="form-control slot_name" placeholder="Slot Name [eg., Top sidebar, left 2nd sidebar]" value="' . esc_attr( $banner->slot_name ) . '"/>
+		    </div>
+		    <div class="col-md-6">';
 		if ( 'upload' === $banner->banner_type ) {
 			$content .= bc_rb_drop_down( 'ads_type', bc_rb_get_ads_type(), $banner->ads_type, 'disabled', 'ads_type' );
 		}
@@ -437,7 +446,7 @@ function bc_rb_loop_campaign_data( $data ) {
 		}
 
 		$content .= '</div>
-  </div>';
+		  </div>';
 
 		if ( ( 'Cost Per Impression' === $banner->ads_type ) || ( 'script' === $banner->banner_type ) ) {
 			$ads_type_click = 'hide';
@@ -445,41 +454,46 @@ function bc_rb_loop_campaign_data( $data ) {
 			$ads_type_impression = 'hide';
 		}
 		$content .= '<div class="row padding_top_10 ads_click ' . $ads_type_click . '">
-    <div class="col-md-6">
-      <input required readonly type="text" name="max_click" class="form-control max_click" placeholder="Maximum Click" value="' . bc_rb_rename_to_unlimited( $banner->max_click, 'max_click' ) . '"/>
-      <small>Maximum Click</small>
-    </div>
-    <div class="col-md-6">
-    <div class="input-group">
-      <input required readonly type="text" name="cost_per_click" class="form-control cost_per_click" placeholder="Cost per Click" value="' . bc_rb_rename_to_unlimited( $banner->cost_per_click, 'cost_per_click' ) . '"/>
-      <span class="input-group-addon" >$</span>
-      </div>
-  <small>Cost per Single Click</small>
-  </div>
-  </div>';
+		    <div class="col-md-6">
+		      <input required readonly type="text" name="max_click" class="form-control max_click" placeholder="Maximum Click" value="' . bc_rb_rename_to_unlimited( $banner->max_click,
+		                                                                                                                                                             'max_click' ) . '"/>
+		      <small>Maximum Click</small>
+		    </div>
+		    <div class="col-md-6">
+		    <div class="input-group">
+		      <input required readonly type="text" name="cost_per_click" class="form-control cost_per_click" placeholder="Cost per Click" value="' . bc_rb_rename_to_unlimited( $banner->cost_per_click,
+		                                                                                                                                                                        'cost_per_click' ) . '"/>
+		      <span class="input-group-text" >$</span>
+		      </div>
+		  <small>Cost per Single Click</small>
+		  </div>
+		  </div>';
 
 		$content .= '<div class="row padding_top_10 ads_impression ' . $ads_type_impression . '">
-    <div class="col-md-6">
-      <input required readonly type="text" name="max_impression" class="form-control max_impression" placeholder="Maximum Impression" value="' . bc_rb_rename_to_unlimited( $banner->max_impression, 'max_impression' ) . '"/>
-      <small>Maximum Impression</small>
-    </div>
-    <div class="col-md-6">
-    <div class="input-group">
-      <input required readonly type="text" name="cost_per_impression" class="form-control cost_per_impression" placeholder="Cost per Impression" value="' . bc_rb_rename_to_unlimited( $banner->cost_per_impression, 'cost_per_impression' ) . '"/>
-      <span class="input-group-addon" >$</span>
-      </div>
-    <small>Cost per Single Impression</small>
-    </div>
-  </div>';
+		    <div class="col-md-6">
+		      <input required readonly type="text" name="max_impression" class="form-control max_impression" placeholder="Maximum Impression" value="' . bc_rb_rename_to_unlimited( $banner->max_impression,
+		                                                                                                                                                                            'max_impression' ) . '"/>
+		      <small>Maximum Impression</small>
+		    </div>
+		    <div class="col-md-6">
+		    <div class="input-group">
+		      <input required readonly type="text" name="cost_per_impression" class="form-control cost_per_impression" placeholder="Cost per Impression" value="' . bc_rb_rename_to_unlimited( $banner->cost_per_impression,
+		                                                                                                                                                                                       'cost_per_impression' ) . '"/>
+		      <span class="input-group-text" >$</span>
+		      </div>
+		    <small>Cost per Single Impression</small>
+		    </div>
+		  </div>';
 
 		$content .= '</div>
-  <div class="col-md-2">
-    <div class="col-md-12">
-      <button type="submit" class="btn btn-primary bc_rb_campaign_edit"> ' . esc_html__( 'Edit', 'random-banner' ) . '</button>
-    </div>
-  </div>
-
-</form></div>';
+		  <div class="col-md-2">
+		    <div class="col-md-12">
+		      <button type="submit" class="btn btn-primary bc_rb_campaign_edit"> ' . esc_html__( 'Edit', 'random-banner' ) . '</button>
+		    </div>
+		  </div>
+		</div>
+		</form>
+	</div>';
 	}
 
 	return $content;
@@ -538,7 +552,7 @@ function bc_rb_log_get_all_banner( $category ) {
  * Generate Banners for Sidebar and Shortcode
  *
  * @param string $category Category.
- * @param array  $slider  Slider.
+ * @param array  $slider   Slider.
  *
  * @return string
  */
@@ -567,8 +581,8 @@ function bc_rb_generate_banners( $category, array $slider ) {
 					$custom_size = 'style=width:' . (int) $widget->width . 'px; height:' . (int) $widget->height . 'px';
 				}
 				$banner_content .= '<div class="bc_random_banner" data-id="' . (int) $widget->id . '" data-url="' . esc_url( admin_url( 'admin-ajax.php?action=bc_rb_ads_click&nonce=' . wp_create_nonce( 'bc_rb_ads_click' ) ) ) . '"><a ' . bc_rb_open_case() . ' href="' .
-								   esc_url( $widget->external_link ) . '" title="' . esc_attr( $widget->file_description ) . '"><img ' . $custom_size . '  src="' . esc_url( $widget->file_url ) . '?v=' .
-								   $random_number . '" title="' . esc_attr( $widget->file_description ) . '"/></a></div>';
+				                   esc_url( $widget->external_link ) . '" title="' . esc_attr( $widget->file_description ) . '"><img ' . $custom_size . '  src="' . esc_url( $widget->file_url ) . '?v=' .
+				                   $random_number . '" title="' . esc_attr( $widget->file_description ) . '"/></a></div>';
 			}
 		}
 		$banner_content .= '</div>';
@@ -591,8 +605,8 @@ function bc_rb_generate_banners( $category, array $slider ) {
 		} else {
 			if ( 'script' === $widget->banner_type ) {
 				$banner_content .= '<div class="bc_random_banner script_bc_rb_widget" data-id="' . (int) $widget->id . '" data-url="' . esc_url( admin_url( 'admin-ajax.php?action=bc_rb_ads_click&nonce=' . wp_create_nonce( 'bc_rb_ads_click' ) ) ) . '">'
-								   . bc_rb_convert_to_html( $widget->file_url ) .
-								   '</div>';
+				                   . bc_rb_convert_to_html( $widget->file_url ) .
+				                   '</div>';
 			}
 			if ( 'upload' === $widget->banner_type ) {
 				$custom_size = '';
@@ -600,8 +614,8 @@ function bc_rb_generate_banners( $category, array $slider ) {
 					$custom_size = 'style=width:' . (int) $widget->width . 'px; height:' . (int) $widget->height . 'px';
 				}
 				$banner_content .= '<div class="bc_random_banner" data-id="' . (int) $widget->id . '" data-url="' . esc_url( admin_url( 'admin-ajax.php?action=bc_rb_ads_click&nonce=' . wp_create_nonce( 'bc_rb_ads_click' ) ) ) . '"><a ' . bc_rb_open_case() . ' href="' .
-								   esc_url( $widget->external_link ) . '" title="' . esc_attr( $widget->file_description ) . '"><img ' . $custom_size . ' src="' . esc_url( $widget->file_url ) . '?v=' .
-								   (int) $random_number . '"  title="' . esc_attr( $widget->file_description ) . '"/></a></div>';
+				                   esc_url( $widget->external_link ) . '" title="' . esc_attr( $widget->file_description ) . '"><img ' . $custom_size . ' src="' . esc_url( $widget->file_url ) . '?v=' .
+				                   (int) $random_number . '"  title="' . esc_attr( $widget->file_description ) . '"/></a></div>';
 			}
 		}
 	}
@@ -646,7 +660,7 @@ function bc_rb_check_ads_required( $content ) {
 /**
  * Insert Shortcode into Post | Page
  *
- * @param String         $content Content.
+ * @param String         $content  Content.
  * @param String | array $settings Location Top | Bottom | In between.
  *
  * @return string
